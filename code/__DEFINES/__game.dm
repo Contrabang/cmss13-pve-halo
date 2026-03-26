@@ -6,7 +6,7 @@
 #define GLOBAL_PROC "magic BS"
 
 //Game defining directives.
-#define MAIN_AI_SYSTEM "ARES v3.2"
+#define MAIN_AI_SYSTEM "TITAN 1200" //Previously ARES v3.2
 
 // Maploader bounds indices
 #define MAP_MINX 1
@@ -40,7 +40,20 @@
 #define MAP_NEW_VARADERO_REPAIRED "New Varadero Repaired"
 #define MAP_CHINOOK "Chinook 91 GSO" //admin level
 #define MAP_DERELICT_ALMAYER "Derelict Almayer"
-
+#define MAP_TAIPEI_STATION "Taipei Station"
+#define MAP_LV295_BLACKSITE "LV295 Blacksite"
+#define MAP_SI391_SEKHMET "SI-391 Sekhmet Swamp"
+#define MAP_BMG290_OTOGI_EGRESS_POINT "BMG-290 Otogi Egress Point" //mapjam
+#define MAP_TAIPEI "Taipei Way-Station" //mapjam LAGO
+#define MAP_CANYON_32B "Canyon 32B"
+#define MAP_BIG_BLUE "Kleschers Research Site"
+#define MAP_CALLIOPE_HIGHWAY "Calliope Highway" //blueshift-orientated
+#define MAP_CALLIOPE_DESERT_BUS "Calliope Desert Bus" //long-town road
+#define MAP_OREAD_GARRISON "OBW - Oread Garrison" //mapjam
+#define MAP_BOSENMORI_BASHO "Bosenmori Basho"
+#define MAP_REDEMPTION_VALLEY "Redemption Valley" //valley with a military outpost and agricultural hamlet
+#define MAP_BINHAI_SUPPLY_STATION "Binhai Supply Station" //UPP asteroid base
+#define MAP_HALO_NEW_IRVINE "New Irvine"
 #define GAMEMODE_WHISKEY_OUTPOST "Whiskey Outpost"
 #define GAMEMODE_HIVE_WARS "Hive Wars"
 
@@ -191,7 +204,7 @@
 /// how long in ticks we wait before assuming the docking controller is broken or blown up.
 #define DOCK_ATTEMPT_TIMEOUT 20 SECONDS
 #define DROPSHIP_WARMUP_TIME 10 SECONDS
-#define DROPSHIP_DROP_MSG_DELAY 30 SECONDS
+#define DROPSHIP_DROP_MSG_DELAY 5 SECONDS
 #define DROPSHIP_TRANSIT_DURATION 100 SECONDS
 #define DROPSHIP_CORSAT_DURATION 30 SECONDS
 #define ELEVATOR_TRANSIT_DURATION 5 SECONDS
@@ -276,6 +289,7 @@
 #define CEILING_PROTECTION_TIER_3 3
 #define CEILING_UNDERGROUND_BLOCK_CAS 3.1
 #define CEILING_UNDERGROUND_METAL_BLOCK_CAS 3.2
+#define CEILING_HULL_METAL 3.3
 
 /// Blocks OB fire
 #define CEILING_PROTECTION_TIER_4 4
@@ -384,6 +398,12 @@
 #define WALL_DEVWALL_R "devwall_r"
 #define WALL_HUNTERSHIP "metal"//DMI specific name
 #define WALL_AICORE "aiwall"
+#define WALL_UPP_GREEN "uppwall_interior"
+#define WALL_UPP_GREY "uppwall_interior"
+#define WALL_UNSC "unsc"
+#define WALL_VOI "voiwall"
+#define WALL_COV "covwall"
+#define WALL_COV_LIGHTS "l_covwall"
 
 //Defines for dropship weapon gimbals
 #define GIMBAL_LEFT -1

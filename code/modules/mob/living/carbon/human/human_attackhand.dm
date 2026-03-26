@@ -23,14 +23,14 @@
 				return 1
 
 			// If unconscious with oxygen damage, do CPR. If dead, we do CPR
-			if(!((stat == UNCONSCIOUS || (locate(/datum/effects/crit) in effects_list)) && getOxyLoss() > 0) && !(stat == DEAD))
+			if(!((stat == UNCONSCIOUS || ((locate(/datum/effects/crit) in effects_list) && (status_flags & CANKNOCKOUT))) && getOxyLoss() > 0) && !(stat == DEAD))
 				help_shake_act(attacking_mob)
 				return 1
 
-			if(attacking_mob.head && (attacking_mob.head.flags_inventory & COVERMOUTH) || attacking_mob.wear_mask && (attacking_mob.wear_mask.flags_inventory & COVERMOUTH) && !(attacking_mob.wear_mask.flags_inventory & ALLOWCPR))
+			if(attacking_mob.head && (attacking_mob.head.flags_inventory & COVERMOUTH) && !(attacking_mob.head.flags_inventory & ALLOWCPR) || attacking_mob.wear_mask && (attacking_mob.wear_mask.flags_inventory & COVERMOUTH) && !(attacking_mob.wear_mask.flags_inventory & ALLOWCPR))
 				to_chat(attacking_mob, SPAN_NOTICE("<B>Remove your mask!</B>"))
 				return 0
-			if(head && (head.flags_inventory & COVERMOUTH) || wear_mask && (wear_mask.flags_inventory & COVERMOUTH) && !(wear_mask.flags_inventory & ALLOWCPR))
+			if(head && (head.flags_inventory & COVERMOUTH) && !(head.flags_inventory & ALLOWCPR) || wear_mask && (wear_mask.flags_inventory & COVERMOUTH) && !(wear_mask.flags_inventory & ALLOWCPR))
 				to_chat(attacking_mob, SPAN_NOTICE("<B>Remove [src.gender==MALE?"his":"her"] mask!</B>"))
 				return 0
 			if(cpr_attempt_timer >= world.time)
@@ -74,6 +74,7 @@
 		if(INTENT_HARM)
 			// See if they can attack, and which attacks to use.
 			var/datum/unarmed_attack/attack = attacking_mob.species.unarmed
+
 			if(!attack.is_usable(attacking_mob))
 				attack = attacking_mob.species.secondary_unarmed
 				return
@@ -94,11 +95,15 @@
 			var/obj/limb/affecting = get_limb(rand_zone(attacking_mob.zone_selected, 70))
 			var/armor = getarmor(affecting, ARMOR_MELEE)
 
+			raw_damage = attack.damage + extra_cqc_dmg
+
+			if(check_energy_shield(damage = raw_damage, attack_text = "the hit"))
+				return
+
 			playsound(loc, attack.attack_sound, 25, 1)
 
 			visible_message(SPAN_DANGER("[attacking_mob] [pick(attack.attack_verb)]ed [src]!"), null, null, 5)
 
-			raw_damage = attack.damage + extra_cqc_dmg
 			var/final_damage = armor_damage_reduction(GLOB.marine_melee, raw_damage, armor, FALSE) // no penetration from punches
 			apply_damage(final_damage, BRUTE, affecting, sharp=attack.sharp, edge = attack.edge)
 
@@ -294,6 +299,10 @@
 			postscript += " <b>(NANOSPLINTED)</b>"
 		else if(org.status & LIMB_SPLINTED)
 			postscript += " <b>(SPLINTED)</b>"
+		for(var/datum/effects/bleeding/internal/I in org.bleeding_effects_list)
+			postscript += " <b>It is bleeding pulsatilely.</b> "
+			if(I.has_been_bandaged)
+				postscript += " <b>(PACKED)</b> "
 
 		if(postscript)
 			limb_message += "\t My [org.display_name] is [SPAN_WARNING("[english_list(status, final_comma_text = ",")].[postscript]")]"

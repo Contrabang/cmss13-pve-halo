@@ -317,7 +317,7 @@
 	deconstruct(FALSE)
 
 /obj/structure/window/clicked(mob/user, list/mods)
-	if(mods["alt"])
+	if(mods[ALT_CLICK])
 		revrotate(user)
 		return TRUE
 
@@ -1050,3 +1050,31 @@
 	icon_state = "paddedsec_rwindow0"
 	basestate = "paddedsec_rwindow"
 	window_frame = /obj/structure/window_frame/corsat/security
+
+/obj/structure/window/framed/upp
+	name = "military grade window"
+	desc = "A glass window. Light refracts incorrectly when looking through. It looks rather strong. Might take a few good hits to shatter it."
+	health = 100
+	reinf = 1
+
+/obj/structure/window/framed/upp/green
+	icon = 'icons/turf/walls/upp_green_windows.dmi'
+	icon_state = "uppwall_window0"
+	basestate = "uppwall_window"
+	window_frame = /obj/structure/window_frame/upp/green
+
+/obj/structure/window/framed/upp/grey
+	icon = 'icons/turf/walls/upp_grey_windows.dmi'
+	icon_state = "uppwall_window0"
+	basestate = "uppwall_window"
+	window_frame = /obj/structure/window_frame/upp/grey
+
+/obj/structure/window/framed/unsc
+	name = "reinforced window"
+	desc = "A glass window with a special rod matrix inside a wall frame. It looks rather strong. Might take a few good hits to shatter it."
+	icon = 'icons/halo/turf/walls/unsc_window.dmi'
+	icon_state = "unsc_window0"
+	basestate = "unsc_window"
+	health = 300
+	reinf = TRUE
+	window_frame = /obj/structure/window_frame/unsc

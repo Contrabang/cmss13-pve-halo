@@ -553,9 +553,9 @@
 	/// time between sounds
 	var/time_to_sound = 20
 	/// Time for it to burn through fuel
-	var/fuel_stage_time = 1 MINUTES
+	var/fuel_stage_time = 5 MINUTES
 	/// How much fuel it has
-	var/remaining_fuel = 5 //Maxes at 5, but burns one when made
+	var/remaining_fuel = 10 //Maxes at 10, but burns one when made
 	/// If the fire can be manually put out
 	var/extinguishable = TRUE
 	/// Make no noise
@@ -569,11 +569,11 @@
 /obj/structure/prop/brazier/campfire/get_examine_text(mob/user)
 	. = ..()
 	switch(remaining_fuel)
-		if(4 to INFINITY)
+		if(7 to INFINITY)
 			. += "The fire is roaring."
-		if(2 to 3)
+		if(4 to 6)
 			. += "The fire is burning warm."
-		if(-INFINITY to 1)
+		if(-INFINITY to 3)
 			. += "The embers of the fire barely burns."
 
 /obj/structure/prop/brazier/campfire/process(delta_time)
@@ -589,7 +589,7 @@
 		return
 	time_to_sound -= delta_time
 	if(time_to_sound <= 0)
-		playsound(loc, 'sound/machines/firepit_ambience.ogg', 15, FALSE, heating_range)
+		playsound(loc, 'sound/machines/firepit_ambience.ogg', 40, FALSE, heating_range)
 		time_to_sound = initial(time_to_sound)
 
 /obj/structure/prop/brazier/campfire/attack_hand(mob/user)
@@ -802,7 +802,7 @@
 
 /obj/structure/prop/vehicles/tank/twe
 	name = "\improper FV150 Shobo MKII"
-	desc = "The FV150 Shobo MKII is a Combat Reconnaissance Vehicle Tracked, abbreviated to CVR(T) in official documentation. It was co-developed in 2175 by Weyland-Yutani and Gallar Co., a Titan based heavy vehicle manufacturer. Taking into account lessons learned from the MkI's performance in the Australian Wars, major structual changes were made, and the MKII went into production in 2178. It is armed with a twin 30mm cannon and a L56A2 10x28mm coaxial, complimented by its ammunition stores of 170 rounds of 30mm and 1600 rounds of 10x28mm. The maximum speed of the Shobo is 60 mph, but on a standard deployment after the ammo stores are fully loaded and the terrain is taken into account, it consistently sits at 55mph."
+	desc = "The FV150 Shobo MKII is a Combat Reconnaissance Vehicle Tracked, abbreviated to CVR(T) in official documentation. It was co-developed in 2175 by Weyland-Yutani and Gallar Co., a Titan based heavy vehicle manufacturer. Taking into account lessons learned from the MkI's performance in the Australian Wars, major structual changes were made, and the MKII went into production in 2178. It is armed with a twin 30mm cannon and a L58A3 10x28mm coaxial, complimented by its ammunition stores of 170 rounds of 30mm and 1600 rounds of 10x28mm. The maximum speed of the Shobo is 60 mph, but on a standard deployment after the ammo stores are fully loaded and the terrain is taken into account, it consistently sits at 55mph."
 	icon = 'icons/obj/vehicles/twe_tank.dmi'
 	icon_state = "twe_tank"
 	density = TRUE
@@ -1216,3 +1216,64 @@
 	mouse_opacity = 0
 	layer = 6
 	density = 0
+
+// unsc prop
+
+/obj/structure/prop/unsc_crate
+	name = "UNSC crate"
+	desc = "A military-grade crate. It doesn't look easy to open. And it looks...pink. You shouldn't be seeing this."
+	icon = 'icons/halo/obj/structures/props/crates.dmi'
+	icon_state = null
+	density = TRUE
+
+/obj/structure/prop/unsc_crate/stack
+	name = "secured UNSC supply crates"
+	desc = "Two supply crates fastened to each other with a strap. If only the strap wasn't stuck on."
+	icon = 'icons/halo/obj/structures/crates.dmi'
+	icon_state = "cratestack"
+
+/obj/structure/prop/unsc_crate/standard
+	desc = "A military-grade crate. It doesn't look easy to open."
+	icon_state = "c1_greyscale"
+
+/obj/structure/prop/unsc_crate/standard/blue
+	icon_state = "c1_blue"
+
+/obj/structure/prop/unsc_crate/standard/red
+	icon_state = "c1_red"
+
+/obj/structure/prop/unsc_crate/standard/green
+	icon_state = "c1_green"
+
+/obj/structure/prop/unsc_crate/standard/medical
+	icon_state = "c1_medical"
+
+/obj/structure/prop/unsc_crate/corrugated
+	desc = "A military-grade crate with corrugated paneling. It doesn't look easy to open."
+	icon_state = "c2_greyscale"
+
+/obj/structure/prop/unsc_crate/corrugated/blue
+	icon_state = "c2_blue"
+
+/obj/structure/prop/unsc_crate/corrugated/red
+	icon_state = "c2_red"
+
+/obj/structure/prop/unsc_crate/corrugated/green
+	icon_state = "c2_green"
+
+/obj/structure/prop/unsc_crate/big
+	name = "UNSC crate"
+	desc = "A large military-grade crate. It doesn't look easy to open."
+	icon = 'icons/halo/obj/structures/props/64x64crates.dmi'
+	icon_state = "crate"
+	bound_height = 64
+	pixel_x = -5
+
+/obj/structure/prop/unsc_crate/big/stack
+	name = "UNSC crates"
+	desc = "A stack of large military-grade crates. They don't look easy to open."
+	icon_state = "pile"
+	pixel_x = -3
+
+/obj/structure/prop/unsc_crate/big/stack/alt
+	icon_state = "pile2"

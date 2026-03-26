@@ -80,18 +80,6 @@
 	healthcheck()
 	return TRUE
 
-/obj/structure/reagent_dispensers/attack_alien(mob/living/carbon/xenomorph/user)
-	if(unslashable)
-		return XENO_NO_DELAY_ACTION
-	user.animation_attack_on(src)
-	health -= (rand(user.melee_damage_lower, user.melee_damage_upper))
-	playsound(src, 'sound/effects/metalhit.ogg', 25, 1)
-	user.visible_message(SPAN_DANGER("[user] slashes \the [src]!"), \
-	SPAN_DANGER("You slash \the [src]!"), null, 5, CHAT_TYPE_XENO_COMBAT)
-	healthcheck()
-	return XENO_ATTACK_ACTION
-
-
 /obj/structure/reagent_dispensers/verb/set_transfer_direction() //set amount_per_transfer_from_this
 	set name = "Set transfer direction"
 	set category = "Object"
@@ -141,7 +129,7 @@
 	if(!reagents || reagents.locked)
 		return ..()
 
-	if(mods["alt"])
+	if(mods[ALT_CLICK])
 		dispensing = !dispensing
 		if(dispensing)
 			to_chat(user, SPAN_NOTICE("[src] is now dispensing"))
@@ -162,6 +150,13 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "watertank"
 	chemical = "water"
+
+/obj/structure/reagent_dispensers/watertank/unsc
+	name = "water barrel"
+	desc = "An olive drab barrel containing water. Better not mix it up with the hydrogen tank."
+	icon = 'icons/halo/obj/objects.dmi'
+	icon_state = "barrel_water"
+	anchored = TRUE
 
 /obj/structure/reagent_dispensers/ammoniatank
 	name = "ammoniatank"
@@ -385,6 +380,14 @@
 	if(!reinforced)
 		reagents.source_mob = flame_cause_data?.weak_mob
 		explode()
+
+/obj/structure/reagent_dispensers/fueltank/liquidhydrogen
+	name = "liquid hydrogen fuel barrel"
+	desc = "A large barrel containing liquid hydrogen fuel, commonly used in vehicles and generators for power. A label on the front reads 'NOT FOR CONSUMPTION UNDERANY CIRCUMSTANCES'."
+	icon = 'icons/halo/obj/objects.dmi'
+	icon_state = "barrel_hydrogen"
+	chemical = "liquidhydrogen"
+	anchored = TRUE
 
 /obj/structure/reagent_dispensers/fueltank/gas
 	name = "gastank"

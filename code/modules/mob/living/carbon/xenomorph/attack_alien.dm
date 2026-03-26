@@ -67,6 +67,12 @@
 				playsound(loc, 'sound/weapons/alien_claw_block.ogg', 25, 1) //Feedback
 				return XENO_ATTACK_ACTION
 
+			if(check_energy_shield(0, attacking_xeno.name)) // Blocking check
+				attacking_xeno.visible_message(SPAN_DANGER("[attacking_xeno]'s slash is deflected by [src]'s energy shield!"), \
+				SPAN_DANGER("Our slash is deflected by [src]'s shield!"), null, 5, CHAT_TYPE_XENO_COMBAT)
+				playsound(loc, "shield_hit", 25, 1) //Feedback
+				return XENO_ATTACK_ACTION
+
 			//From this point, we are certain a full attack will go out. Calculate damage and modifiers
 			attacking_xeno.track_slashes(attacking_xeno.caste_type) //Adds to slash stat.
 			var/damage = rand(attacking_xeno.melee_damage_lower, attacking_xeno.melee_damage_upper) + dam_bonus
@@ -855,7 +861,7 @@
 		set_broken()
 		visible_message(SPAN_DANGER("[src]'s electronics are destroyed!"), null, null, 5)
 	else if(wiresexposed)
-		for(var/wire = 1; wire <= length(get_wire_descriptions()); wire++) // Cut all the wires because xenos don't know any better
+		for(var/wire = 1; wire <= length(GLOB.apc_wire_descriptions); wire++) // Cut all the wires because xenos don't know any better
 			if(!isWireCut(wire)) // Xenos don't need to mend the wires either
 				cut(wire, M, FALSE) // This is XOR so it toggles; FALSE just because we don't want the messages
 		update_icon()

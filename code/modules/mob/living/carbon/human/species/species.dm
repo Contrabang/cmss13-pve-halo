@@ -13,7 +13,9 @@
 	var/deform = 'icons/mob/humans/species/r_def_human.dmi' // Mutated icon set.
 	var/icobase_source // if we want to use sourcing system
 	var/deform_source
+	var/dam_icon = 'icons/mob/humans/dam_human.dmi'
 	var/eyes = "eyes_s"   // Icon for eyes.
+	var/eye_icon = 'icons/mob/humans/onmob/human_face.dmi'
 	var/uses_skin_color = FALSE  //Set to TRUE to load proper skin_colors and what have you
 	var/special_body_types = FALSE
 
@@ -61,6 +63,19 @@
 
 	var/body_temperature = 310.15 //non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
 	var/reagent_tag  //Used for metabolizing reagents.
+
+	/// The current dodge pool
+	var/dodge_pool = 5
+	/// The maximum dodge pool
+	var/dodge_pool_max = 5
+	/// The regeneration rate of a dodge pool
+	var/dodge_pool_regen = 0.2
+	/// Maximum regeneration rate of a dodge pool
+	var/dodge_pool_regen_max = 0.2
+	/// Rate at which the dodge pool regen restores itself after the mob is fired at
+	var/dodge_pool_regen_restoration = 0.1
+	/// Base time until regeneration restarts after being fired at
+	var/dp_regen_base_reactivation_time = 30
 
 	var/darksight = 2
 	var/default_lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
@@ -187,28 +202,39 @@
 		QDEL_NULL(H.stamina)
 		H.stamina = new stamina_type(H)
 
-/datum/species/proc/hug(mob/living/carbon/human/H, mob/living/carbon/target, target_zone = "chest")
-	if(H.flags_emote)
+/datum/species/proc/hug(mob/living/carbon/human/human, mob/living/carbon/target, target_zone = "chest")
+	if(human.flags_emote)
 		return
 	var/t_him = target.p_them()
 
+	//answer the call
+	if(target.flags_emote & EMOTING_HIGH_FIVE)
+		attempt_high_five(human, target)
+		return
+	else if(target.flags_emote & EMOTING_FIST_BUMP)
+		attempt_fist_bump(human, target)
+		return
+	else if(target.flags_emote & EMOTING_ROCK_PAPER_SCISSORS)
+		attempt_rock_paper_scissors(human, target)
+		return
+
 	if(target_zone == "head")
-		attempt_rock_paper_scissors(H, target)
+		attempt_rock_paper_scissors(human, target)
 		return
 	else if(target_zone in list("l_arm", "r_arm"))
-		attempt_high_five(H, target)
+		attempt_high_five(human, target)
 		return
 	else if(target_zone in list("l_hand", "r_hand"))
-		attempt_fist_bump(H, target)
+		attempt_fist_bump(human, target)
 		return
-	else if(H.body_position == LYING_DOWN) // Keep other interactions above lying check for maximum awkwardness potential
-		H.visible_message(SPAN_NOTICE("[H] waves at [target] to make [t_him] feel better!"), \
+	else if(human.body_position == LYING_DOWN) // Keep other interactions above lying check for maximum awkwardness potential
+		human.visible_message(SPAN_NOTICE("[human] waves at [target] to make [t_him] feel better!"), \
 			SPAN_NOTICE("You wave at [target] to make [t_him] feel better!"), null, 4)
 	else if(target_zone == "groin")
-		H.visible_message(SPAN_NOTICE("[H] hugs [target] to make [t_him] feel better!"), \
+		human.visible_message(SPAN_NOTICE("[human] hugs [target] to make [t_him] feel better!"), \
 			SPAN_NOTICE("You hug [target] to make [t_him] feel better!"), null, 4)
 	else
-		H.visible_message(SPAN_NOTICE("[H] pats [target] on the back to make [t_him] feel better!"), \
+		human.visible_message(SPAN_NOTICE("[human] pats [target] on the back to make [t_him] feel better!"), \
 			SPAN_NOTICE("You pat [target] on the back to make [t_him] feel better!"), null, 4)
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 25, 1, 5)
 

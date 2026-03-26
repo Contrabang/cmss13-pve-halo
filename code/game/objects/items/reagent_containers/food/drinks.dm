@@ -12,8 +12,14 @@
 	volume = 50
 
 /obj/item/reagent_container/food/drinks/on_reagent_change()
-	if (gulp_size < 5) gulp_size = 5
+	if(gulp_size < 5)
+		gulp_size = 5
 	else gulp_size = max(floor(reagents.total_volume / 5), 5)
+
+/obj/item/reagent_container/food/drinks/flask/on_reagent_change()
+	if(gulp_size < 15)
+		gulp_size = 15
+	else gulp_size = max(floor(reagents.total_volume / 15), 15)
 
 /obj/item/reagent_container/food/drinks/attack(mob/M, mob/user)
 	var/datum/reagents/R = src.reagents
@@ -143,8 +149,8 @@
 // Formatting is the same as food.
 
 /obj/item/reagent_container/food/drinks/milk
-	name = "Space Milk"
-	desc = "It's milk. White and nutritious goodness!"
+	name = "milk carton"
+	desc = "A carton of 2% cow milk."
 	icon_state = "milk"
 	item_state = "carton"
 	center_of_mass = "x=16;y=9"
@@ -169,8 +175,8 @@
 */
 
 /obj/item/reagent_container/food/drinks/soymilk
-	name = "soy milk"
-	desc = "It's soy milk. White and nutritious goodness!"
+	name = "soy milk carton"
+	desc = "A carton of soy milk."
 	icon_state = "soymilk"
 	item_state = "carton"
 	center_of_mass = "x=16;y=9"
@@ -178,6 +184,17 @@
 /obj/item/reagent_container/food/drinks/soymilk/Initialize()
 	. = ..()
 	reagents.add_reagent("soymilk", 50)
+
+/obj/item/reagent_container/food/drinks/chocolatemilk
+	name = "chocolate milk carton"
+	desc = "A carton of chocolate milk."
+	icon_state = "chocmilk"
+	item_state = "carton"
+	center_of_mass = "x=16;y=9"
+
+/obj/item/reagent_container/food/drinks/chocolatemilk/Initialize()
+	. = ..()
+	reagents.add_reagent("chocolatemilk", 50)
 
 /obj/item/reagent_container/food/drinks/coffee
 	name = "\improper Coffee"
@@ -190,7 +207,7 @@
 	reagents.add_reagent("coffee", 20)
 
 /obj/item/reagent_container/food/drinks/coffee/marine
-	desc = "Recycled water, lab-grown coffee plants genetically designed for minimum expense and maximum production, and re-recycled coffee grounds have mixed together to create this insultingly cheap USCM culinary 'wonder'. You're just glad the troops get issued water for free."
+	desc = "Recycled water, lab-grown coffee plants genetically designed for minimum expense and maximum production, and re-recycled coffee grounds have mixed together to create this insultingly cheap UNSC culinary 'wonder'."
 
 /obj/item/reagent_container/food/drinks/tea
 	name = "\improper Duke Purple Tea"
@@ -202,6 +219,28 @@
 /obj/item/reagent_container/food/drinks/tea/Initialize()
 	. = ..()
 	reagents.add_reagent("tea", 30)
+
+/obj/item/reagent_container/food/drinks/tea/upp
+	name = "\improper insulated container"
+	desc = "A small, reusable, insulated container for holding liquids with a sip lid."
+	icon_state = "tea_upp"
+	item_state = "coffee"
+	center_of_mass = "x=16;y=14"
+
+/obj/item/reagent_container/food/drinks/tea/upp/Initialize()
+	. = ..()
+	reagents.add_reagent("tea", 30)
+
+/obj/item/reagent_container/food/drinks/water
+	name = "\improper insulated container"
+	desc = "A small, reusable, insulated container for holding liquids with a sip lid."
+	icon_state = "tea_upp"
+	item_state = "coffee"
+	center_of_mass = "x=16;y=14"
+
+/obj/item/reagent_container/food/drinks/water/Initialize()
+	. = ..()
+	reagents.add_reagent("water", 30)
 
 /obj/item/reagent_container/food/drinks/ice
 	name = "ice cup"
@@ -302,26 +341,26 @@
 	name = "metal flask"
 	desc = "A metal flask with a decent liquid capacity."
 	icon_state = "flask"
-	volume = 60
+	volume = 120
 	center_of_mass = "x=17;y=8"
 
 /obj/item/reagent_container/food/drinks/flask/marine
-	name = "\improper USCM flask"
-	desc = "A metal flask embossed with the USCM logo and probably filled with a slurry of water, motor oil, and medicinal alcohol."
+	name = "\improper UNSC flask"
+	desc = "A metal flask embossed with the UNSC logo and probably filled with a slurry of water, motor oil, and medicinal alcohol."
 	icon_state = "flask_uscm"
-	volume = 60
+	volume = 120
 	center_of_mass = "x=17;y=8"
 
 /obj/item/reagent_container/food/drinks/flask/marine/Initialize()
 	. = ..()
-	reagents.add_reagent("water", 59)
-	reagents.add_reagent("hooch", 1)
+	reagents.add_reagent("water", 118)
+	reagents.add_reagent("hooch", 2)
 
 /obj/item/reagent_container/food/drinks/flask/weylandyutani
 	name = "\improper Weyland-Yutani flask"
 	desc = "A metal flask embossed with Weyland-Yutani's signature logo that some corporate bootlicker probably ordered to be stocked in USS military vessels' canteen vendors."
 	icon_state = "flask_wy"
-	volume = 60
+	volume = 120
 	center_of_mass = "x=17;y=8"
 
 /obj/item/reagent_container/food/drinks/flask/weylandyutani/Initialize()
@@ -332,12 +371,12 @@
 	name = "canteen"
 	desc = "A ruggedized metal alloy flask. Can hold a good amount of water... Or other liquids."
 	icon_state = "canteen"
-	volume = 60
+	volume = 120
 	center_of_mass = "x=17;y=8"
 
 /obj/item/reagent_container/food/drinks/flask/canteen/Initialize()
 	. = ..()
-	reagents.add_reagent("water", 60)
+	reagents.add_reagent("water", 120)
 
 /obj/item/reagent_container/food/drinks/flask/canteen/empty
 
@@ -349,7 +388,7 @@
 	name = "brown leather flask"
 	desc = "A flask with a leather band around the sides, often seen filled with whiskey and carried by rugged, gritty detectives."
 	icon_state = "brownflask"
-	volume = 60
+	volume = 120
 	center_of_mass = "x=17;y=8"
 
 /obj/item/reagent_container/food/drinks/flask/detflask/Initialize()
@@ -361,14 +400,14 @@
 	name = "black leather flask"
 	desc = "A flask with a slick black leather band around the sides. For those who can't be bothered to hang out at the bar to drink."
 	icon_state = "blackflask"
-	volume = 60
+	volume = 120
 	center_of_mass = "x=17;y=7"
 
 /obj/item/reagent_container/food/drinks/flask/vacuumflask
 	name = "vacuum flask"
 	desc = "Keeping your drinks at the perfect temperature since 1892."
 	icon_state = "vacuumflask"
-	volume = 60
+	volume = 120
 	center_of_mass = "x=15;y=4"
 
 /obj/item/reagent_container/food/drinks/coffeecup
@@ -379,8 +418,8 @@
 	center_of_mass = "x=15;y=13"
 
 /obj/item/reagent_container/food/drinks/coffeecup/uscm
-	name = "USCM coffee mug"
-	desc = "A red, white and blue coffee mug depicting the emblem of the USCM. Patriotic and bold, and commonly seen among veterans as a novelty."
+	name = "UNSC coffee mug"
+	desc = "A red, white and blue coffee mug depicting the emblem of the UNSC. Patriotic and bold, and commonly seen among veterans as a novelty."
 	icon_state = "uscmcup"
 
 /obj/item/reagent_container/food/drinks/coffeecup/wy

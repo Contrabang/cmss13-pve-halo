@@ -56,6 +56,8 @@ SUBSYSTEM_DEF(ticker)
 	var/totalPlayersReady = 0 //used for pregame stats on statpanel
 	var/tutorial_disabled = FALSE
 
+	var/intro_sequence = TRUE
+
 /datum/controller/subsystem/ticker/Initialize(timeofday)
 	load_mode()
 
@@ -365,7 +367,6 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/M = J.spawn_in_player(player)
 		if(istype(M))
 			J.equip_job(M)
-			EquipCustomItems(M)
 
 			if(M.client)
 				var/client/C = M.client
@@ -395,7 +396,6 @@ SUBSYSTEM_DEF(ticker)
 				captainless = FALSE
 			if(player.job)
 				GLOB.RoleAuthority.equip_role(player, GLOB.RoleAuthority.roles_by_name[player.job], late_join = FALSE)
-				EquipCustomItems(player)
 			if(player.client)
 				var/client/C = player.client
 				if(C.player_data && C.player_data.playtime_loaded && length(C.player_data.playtimes) == 0)
@@ -409,7 +409,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
 	var/message
-	var/tip_file = pick("strings/marinetips.txt", "strings/metatips.txt", 15;"strings/memetips.txt")
+	var/tip_file = pick("strings/pvetips.txt")
 	var/list/tip_list = file2list(tip_file)
 	if(length(tip_file))
 		message = pick(tip_list)
@@ -417,7 +417,7 @@ SUBSYSTEM_DEF(ticker)
 		CRASH("send_tip_of_the_round() failed somewhere")
 
 	if(message)
-		to_chat(world, SPAN_PURPLE("<b>Tip of the round: </b>[html_encode(message)]"))
+		to_chat(world, SPAN_PURPLE("<b>Tidbit of the round: </b>[html_encode(message)]"))
 		return TRUE
 	else
 		return FALSE

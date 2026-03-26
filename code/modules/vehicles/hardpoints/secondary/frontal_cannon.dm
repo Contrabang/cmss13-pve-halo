@@ -18,17 +18,17 @@
 	allowed_seat = VEHICLE_DRIVER
 
 	ammo = new /obj/item/ammo_magazine/hardpoint/m56_cupola/frontal_cannon
-	max_clips = 1
+	max_clips = 2
 
 	use_muzzle_flash = TRUE
 	angle_muzzleflash = FALSE
 	muzzleflash_icon_state = "muzzle_flash_double"
 
 	muzzle_flash_pos = list(
-		"1" = list(-14, 46),
-		"2" = list(15, -76),
-		"4" = list(62, -26),
-		"8" = list(-62, -26)
+		"1" = list(-14, 52),
+		"2" = list(15, -82),
+		"4" = list(68, -26),
+		"8" = list(-68, -26)
 	)
 
 	scatter = 1

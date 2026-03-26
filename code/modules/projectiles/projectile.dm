@@ -16,6 +16,7 @@
 	alpha = 0 // We want this thing to be transparent when it drops on a turf because it will be on the user's turf. We then want to make it opaque as it travels.
 	layer = FLY_LAYER
 	animate_movement = NO_STEPS //disables gliding because it fights against what animate() is doing
+	light_system = MOVABLE_LIGHT
 
 	var/datum/ammo/ammo //The ammo data which holds most of the actual info.
 
@@ -115,6 +116,10 @@
 	SSprojectiles.stop_projectile(src)
 	return ..()
 
+/obj/projectile/update_icon()
+	if(ammo.ammo_glowing)
+		overlays += emissive_appearance(icon, icon_state, src, layer, reset_transform = FALSE)
+
 /obj/projectile/proc/apply_bullet_trait(list/entry)
 	bullet_traits += list(entry.Copy())
 	// Need to use the proc instead of the wrapper because each entry is a list
@@ -187,7 +192,7 @@
 	return damage
 
 // Target, firer, shot from (i.e. the gun), projectile range, projectile speed, original target (who was aimed at, not where projectile is going towards)
-/obj/projectile/proc/fire_at(atom/target, atom/F, atom/S, range = 30, speed = 1, atom/original_override)
+/obj/projectile/proc/fire_at(atom/target, atom/F, atom/S, range = 30, speed = 1, atom/original_override, suppress_light = FALSE)
 	SHOULD_NOT_SLEEP(TRUE)
 	original = original || original_override || target
 	if(!loc)
@@ -227,6 +232,9 @@
 	if(firer && ismob(firer) && weapon_cause_data)
 		var/mob/M = firer
 		M.track_shot(weapon_cause_data.cause_name)
+	if(!suppress_light)
+		if(ammo.ammo_glowing)
+			set_light(1.5, 3, ammo.bullet_light_color)
 
 	//If we have the right kind of ammo, we can fire several projectiles at once.
 	if(ammo.bonus_projectiles_amount && ammo.bonus_projectiles_type)
@@ -237,6 +245,7 @@
 	p_x += clamp((rand()-0.5)*scatter*3, -8, 8)
 	p_y += clamp((rand()-0.5)*scatter*3, -8, 8)
 	update_angle(starting, target_turf)
+	update_icon()
 
 	src.speed = speed
 	// Randomize speed by a small factor to help bullet animations look okay
@@ -422,7 +431,7 @@
 
 		// If the ammo should hit the surface of the target and the next turf is dense
 		// The current turf is the "surface" of the target
-		if(ammo_flags & AMMO_STRIKES_SURFACE)
+		if(ammo_flags & (AMMO_STRIKES_SURFACE|AMMO_STRIKES_SURFACE_ONLY))
 			// We "hit" the current turf but strike the actual blockage
 			ammo.on_hit_turf(get_turf(src),src)
 		else
@@ -483,7 +492,7 @@
 
 		// If the ammo should hit the surface of the target and there is an object blocking
 		// The current turf is the "surface" of the target
-		if(ammo_flags & AMMO_STRIKES_SURFACE)
+		if(ammo_flags & (AMMO_STRIKES_SURFACE|AMMO_STRIKES_SURFACE_ONLY))
 			var/turf/T = get_turf(O)
 
 			// We "hit" the current turf but strike the actual blockage
@@ -533,6 +542,15 @@
 			direct_hit = TRUE
 			if(firer)
 				SEND_SIGNAL(firer, COMSIG_BULLET_DIRECT_HIT, L)
+
+		if (istype(L, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = L
+			if(H.dodge_pool)
+				H.dodge_pool = max(H.dodge_pool - 1, 0)
+			if(H.dodge_pool_regen)
+				H.dodge_pool_regen = max(H.dodge_pool_regen - 1, 0)
+			if(!H.cd_dodge_pool_regen)
+				COOLDOWN_START(H, cd_dodge_pool_regen, H.species.dp_regen_base_reactivation_time)
 
 		// At present, Xenos have no inherent effects or localized damage stemming from limb targeting
 		// Therefore we exempt the shooter from direct hit accuracy penalties as well,
@@ -669,8 +687,8 @@
 
 	//an object's "projectile_coverage" var indicates the maximum probability of blocking a projectile
 	var/effective_accuracy = P.get_effective_accuracy()
-	var/distance_limit = 6 //number of tiles needed to max out block probability
-	var/accuracy_factor = 50 //degree to which accuracy affects probability   (if accuracy is 100, probability is unaffected. Lower accuracies will increase block chance)
+	var/distance_limit = 3 //number of tiles needed to max out block probability
+	var/accuracy_factor = 45 //degree to which accuracy affects probability   (if accuracy is 100, probability is unaffected. Lower accuracies will increase block chance)
 
 	var/hitchance = min(projectile_coverage, (projectile_coverage * distance/distance_limit) + accuracy_factor * (1 - effective_accuracy/100))
 
@@ -842,9 +860,10 @@
 //mobs use get_projectile_hit_chance instead of get_projectile_hit_boolean
 
 /mob/living/proc/get_projectile_hit_chance(obj/projectile/P)
-	if((body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_NO_STRAY)) && src != P.original)
-		return FALSE
+	//This checks to see if a mob is lying down. If they are a bullet has very poor chances to hit them. Made with many thanks to ihatethisengine2.
 	var/ammo_flags = P.ammo.flags_ammo_behavior | P.projectile_override_flags
+	if((body_position == LYING_DOWN && !(ammo_flags & AMMO_PRONETARGET)|| HAS_TRAIT(src, TRAIT_NO_STRAY)) && src != P.original)
+		return FALSE
 	if(ammo_flags & AMMO_XENO)
 		if((status_flags & XENO_HOST) && HAS_TRAIT(src, TRAIT_NESTED))
 			return FALSE
@@ -869,6 +888,8 @@
 			return FALSE
 		if(mobility_aura)
 			. -= mobility_aura * 5
+		if(dodge_pool)
+			. -= dodge_pool * 8
 		var/mob/living/carbon/human/shooter_human = P.firer
 		if(istype(shooter_human))
 			if(shooter_human.faction == faction && !(ammo_flags & AMMO_ALWAYS_FF))
@@ -982,6 +1003,16 @@
 			bullet_ping(P)
 			return
 
+	if(!(ammo_flags & AMMO_ROCKET))
+		if(istype(wear_suit, /obj/item/clothing/suit/marine/shielded))
+			var/obj/item/clothing/suit/marine/shielded/shield = wear_suit
+			if(shield.shield_strength >= 1)
+				if(ammo_flags & AMMO_LASER)
+					check_energy_shield(P.damage, "[P]", shield.shield_strength)
+				else
+					check_energy_shield(P.damage * 0.25, "[P]", shield.shield_strength)
+				return
+
 	var/obj/limb/organ = get_limb(check_zone(P.def_zone)) //Let's finally get what organ we actually hit.
 	if(!organ)
 		return//Nope. Gotta shoot something!
@@ -1071,7 +1102,7 @@
 
 	var/ammo_flags = P.ammo.flags_ammo_behavior | P.projectile_override_flags
 
-	if((ammo_flags & AMMO_FLAME) && (src.caste.fire_immunity & FIRE_IMMUNITY_NO_IGNITE|FIRE_IMMUNITY_NO_DAMAGE))
+	if((ammo_flags & AMMO_FLAME) && (caste.fire_immunity & (FIRE_IMMUNITY_NO_IGNITE|FIRE_IMMUNITY_NO_DAMAGE)))
 		to_chat(src, SPAN_AVOIDHARM("You shrug off the glob of flame."))
 		bullet_message(P, damaging = FALSE)
 		return
@@ -1233,7 +1264,7 @@
 	if(!P || !P.ammo.ping)
 		return
 
-	if(P.ammo.sound_bounce) playsound(src, P.ammo.sound_bounce, 50, 1)
+	if(P.ammo.sound_bounce) playsound(src, P.ammo.sound_bounce, 30)
 	var/image/I = image('icons/obj/items/weapons/projectiles.dmi', src, P.ammo.ping, 10)
 	var/offset_x = clamp(P.pixel_x + pixel_x_offset, -10, 10)
 	var/offset_y = clamp(P.pixel_y + pixel_y_offset, -10, 10)

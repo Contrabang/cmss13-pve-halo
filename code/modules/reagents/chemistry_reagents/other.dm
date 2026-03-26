@@ -46,6 +46,14 @@
 	chemclass = CHEM_CLASS_SPECIAL
 	objective_value = OBJECTIVE_HIGH_VALUE
 
+/datum/reagent/blood/sangheili_blood
+	name = "Sangheili Blood"
+	id = "sangheiliblood"
+	description = "A thick purple blood, definitely not human."
+	color = BLOOD_COLOR_SANGHEILI
+	chemclass = CHEM_CLASS_SPECIAL
+	objective_value = OBJECTIVE_HIGH_VALUE
+
 /datum/reagent/blood/synth_blood
 	name = "Synthetic Blood"
 	id = "whiteblood"
@@ -242,6 +250,12 @@
 
 	custom_metabolism = AMOUNT_PER_TIME(1, 200 SECONDS)
 
+/datum/reagent/hydrogen/liquid
+	name = "Liquid Hydrogen"
+	id = "liquidhydrogen"
+	reagent_state = LIQUID
+
+
 /datum/reagent/potassium
 	name = "Potassium"
 	id = "potassium"
@@ -352,6 +366,8 @@
 	color = COLOR_GRAY
 	chemfiresupp = TRUE
 	intensitymod = 0.15
+	rangefire = 2
+	durationfire = BURN_TIME_TIER_1-5
 	burncolor = "#ff356f"
 	burncolormod = 5
 	overdose = REAGENTS_OVERDOSE
@@ -751,6 +767,19 @@
 	properties = list(
 		PROPERTY_INTENSITY = BURN_LEVEL_TIER_8,
 		PROPERTY_DURATION = BURN_TIME_TIER_1,
+		PROPERTY_RADIUS = 5,
+	)
+
+// Weak flame for scaring marines without instantkilling them
+/datum/reagent/napalm/weak
+	name = "Impure Napalm"
+	id = "weaknapalm"
+	description = "An impure napalm mix, causing it to burn at lower temperatures, typically used with flamethrowers."
+	burncolor = "#e49320"
+	burn_sprite = "dynamic"
+	properties = list(
+		PROPERTY_INTENSITY = BURN_LEVEL_TIER_2,
+		PROPERTY_DURATION = BURN_TIME_TIER_2,
 		PROPERTY_RADIUS = 5,
 	)
 

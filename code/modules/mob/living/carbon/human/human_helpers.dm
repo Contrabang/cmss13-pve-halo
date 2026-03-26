@@ -11,6 +11,7 @@
 
 /proc/get_limb_icon_name(datum/species/S, body_size, body_type, gender, limb_name, skin_color)
 	if(S.uses_skin_color)
+
 		if(S.special_body_types)
 			switch(limb_name)
 				if("torso")
@@ -170,6 +171,16 @@
 		body_size_icon = body_size
 		body_type_icon = body_type
 
+	if(isspeciessangheili(src))
+		skin_color_icon = skin_color
+		body_size_icon = body_size
+		body_type_icon = body_type
+
+	if(isspeciesunggoy(src))
+		skin_color_icon = skin_color
+		body_size_icon = body_size
+		body_type_icon = body_type
+
 	for(var/obj/limb/L as anything in limbs)
 		L.icon_name = get_limb_icon_name(species, body_size_icon, body_type_icon, gender, L.display_name, skin_color_icon)
 
@@ -201,7 +212,7 @@
 	if(istype(brain))
 		return TRUE
 	return FALSE
-
+f
 /mob/living/carbon/human/has_eyes()
 	var/datum/internal_organ/eyes = LAZYACCESS(internal_organs_by_name, "eyes")
 	if(istype(eyes) && !eyes.cut_away)
@@ -210,7 +221,7 @@
 
 
 /mob/living/carbon/human/is_mob_restrained(check_grab = TRUE)
-	if(check_grab && pulledby && pulledby.grab_level >= GRAB_AGGRESSIVE)
+	if(check_grab && pulledby && pulledby.grab_level > GRAB_PASSIVE && pulledby.grab_level != GRAB_XENO)
 		return TRUE
 	if (handcuffed)
 		return TRUE

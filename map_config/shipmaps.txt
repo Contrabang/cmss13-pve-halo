@@ -16,15 +16,46 @@ map almayer
 	disabled
 endmap
 
+map firefly
+	disabled
+endmap
+
 map golden_arrow
-	default
+	disabled
 endmap
 
 map chapaev
+	disabled
+endmap
+
+map firefly
+	disabled
 endmap
 
 map rover
+	disabled
 endmap
 
 map golden_arrow_classic
+	disabled
+endmap
+
+map unsc_dark_was_the_night
+	default
+endmap
+
+map unsc_dark_was_the_night_odst
+
+endmap
+
+map uscss_obsidian_falk
+	disabled
+endmap
+
+map uscss_onyx_karain
+	disabled
+endmap
+
+map hms_brynhild
+	disabled
 endmap

@@ -250,12 +250,14 @@
 	name = "\improper CMB marshal gold badge"
 	desc = "A coveted gold badge signifying that the wearer is one of the few CMB Marshals patroling the outer rim. It is a sign of justice, authority, and protection. Protecting those who can't. This badge represents a commitment to a sworn oath always kept."
 	icon_state = "cmbmar"
+	item_state = "gold_badge"
 	paygrade = PAY_SHORT_CMBM
 
 /obj/item/card/id/deputy
 	name = "\improper CMB deputy silver badge"
 	desc = "The silver badge which represents that the wearer is a CMB Deputy. It is a sign of justice, authority, and protection. Protecting those who can't. This badge represents a commitment to a sworn oath always kept."
 	icon_state = "cmbdep"
+	item_state = "silver_badge"
 	paygrade = PAY_SHORT_CMBD
 
 /obj/item/card/id/general
@@ -416,6 +418,16 @@
 		for (var/i=1 to length(fallen_names))
 			msg += "<br>[i]. \"[fallen_names[i]] - [fallen_assgns[i]] - [fallen_blood_types[i]]\""
 		. += SPAN_NOTICE("[msg]")
+
+/obj/item/card/id/covenant
+	name = "Covenant identity disk"
+	desc = "An identitiy disk forged from nanolaminate. Four holoprojectors, two on each arm, display the personal identification readout of its owner."
+	icon = 'icons/halo/obj/items/card.dmi'
+	icon_state = "cov"
+	item_state = "cov_id"
+	item_icons = list(
+		WEAR_ID = 'icons/halo/mob/humans/onmob/id.dmi'
+	)
 
 // Used to authenticate to CORSAT machines. Doesn't do anything except have its type variable
 /obj/item/card/data/corsat

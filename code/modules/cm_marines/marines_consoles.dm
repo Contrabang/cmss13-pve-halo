@@ -771,6 +771,17 @@
 /obj/structure/machinery/computer/crew/yautja
 	faction = FACTION_YAUTJA
 
+/obj/structure/machinery/computer/crew/unsc
+	faction = FACTION_UNSC
+
+/obj/structure/machinery/computer/crew/unsc/alt
+	icon_state = "cmonitor"
+	density = FALSE
+
+/obj/structure/machinery/computer/crew/unsc/big
+	icon = 'icons/halo/obj/structures/machinery/64x64computer.dmi'
+	bound_width = 64
+
 GLOBAL_LIST_EMPTY_TYPED(crewmonitor, /datum/crewmonitor)
 
 #define SENSOR_LIVING 1
@@ -936,7 +947,7 @@ GLOBAL_LIST_EMPTY_TYPED(crewmonitor, /datum/crewmonitor)
 				JOB_MARINE_RAIDER_CMD = 11,
 				RAIDER_OFFICER_SQUAD = 11,
 				JOB_SO = 12,
-				JOB_SEA = 13,
+				JOB_DI = 13,
 				// 20-29: Aux Command
 				JOB_AUXILIARY_OFFICER = 20,
 				JOB_SYNTH = 21,

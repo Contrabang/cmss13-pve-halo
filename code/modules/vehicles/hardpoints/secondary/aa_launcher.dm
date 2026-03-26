@@ -1,5 +1,5 @@
 /obj/item/hardpoint/secondary/towlauncher/aa
-	name = "Vertical-Launch System Array"
+	name = "\improper Vertical-Launch System Array"
 	desc = "A hull-mounted vertical launch system for the M579 ADS-C, typically loaded with ground-to-air missiles, this one instead is capable of firing ground-to-ground missiles with devestating effect."
 
 	icon_state = "vls_launcher"
@@ -22,10 +22,10 @@
 	)
 
 	muzzle_flash_pos = list(
-		"1" = list(8, -1),
-		"2" = list(-8, -16),
-		"4" = list(5, -8),
-		"8" = list(-5, 10)
+		"1" = list(8, -7),
+		"2" = list(-8, -23),
+		"4" = list(11, -8),
+		"8" = list(-11, 10)
 	)
 
 	scatter = 1
@@ -34,6 +34,7 @@
 /obj/item/hardpoint/secondary/towlauncher/aa/set_bullet_traits()
 	..()
 	LAZYADD(traits_to_give, list(
-		BULLET_TRAIT_ENTRY(/datum/element/bullet_trait_iff)
+		BULLET_TRAIT_ENTRY(/datum/element/bullet_trait_iff),
+		BULLET_TRAIT_ENTRY_ID("vehicles", /datum/element/bullet_trait_damage_boost, 350, GLOB.damage_boost_vehicles),
 	))
 

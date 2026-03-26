@@ -244,7 +244,7 @@
 	matter = list("metal" = 500)
 	attack_speed = 4
 	volume = 180
-	w_class = SIZE_MEDIUM
+	w_class = SIZE_SMALL
 	splashable = FALSE
 	can_be_placed_into = list(
 		/obj/structure/machinery/chem_master/,
@@ -388,6 +388,17 @@
 /obj/item/reagent_container/glass/beaker/vial/sedative/Initialize()
 	. = ..()
 	reagents.add_reagent("chloralhydrate", 30)
+	update_icon()
+
+/obj/item/reagent_container/glass/beaker/vial/kilodermlipo
+	name = "vial (temperature stablization)"
+	desc = "Contains leporazine - used to stabilize body temperature, kelotane and dermaline - used to rapidly heal burns. Filled in a 1:2:3 ratio."
+
+/obj/item/reagent_container/glass/beaker/vial/kilodermlipo/Initialize()
+	. = ..()
+	reagents.add_reagent("leporazine", 5)
+	reagents.add_reagent("kelotane", 10)
+	reagents.add_reagent("dermaline", 15)
 	update_icon()
 
 /obj/item/reagent_container/glass/beaker/vial/random
@@ -644,7 +655,7 @@
 	name = "janitorial bucket"
 	desc = "It's a large bucket that fits in a janitorial cart. Holds 500 units."
 	icon_state = "janibucket"
-	matter = list("metal" = 8000)	
+	matter = list("metal" = 8000)
 	w_class = SIZE_LARGE
 	volume = 500
 
@@ -657,6 +668,7 @@
 	icon_state = "rag"
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5)
+	splashable = FALSE
 	volume = 5
 	can_be_placed_into = null
 	flags_atom = FPRINT|OPENCONTAINER
@@ -679,3 +691,34 @@
 		if(do_after(user,30, INTERRUPT_ALL, BUSY_ICON_GENERIC))
 			user.visible_message("[user] finishes wiping off [AM]!")
 			AM.clean_blood()
+
+/obj/item/reagent_container/glass/barrel
+	name = "canister"
+	desc = "A canister. Can hold up to 240 units."
+	icon = 'icons/halo/obj/objects.dmi'
+	icon_state = "sbarrel"
+	item_state = "sbarrel"
+	matter = list("metal" = 4000)
+	w_class = SIZE_LARGE
+	volume = 240
+	can_be_placed_into = null
+	splashable = FALSE
+	flags_atom = FPRINT|OPENCONTAINER
+
+/obj/item/reagent_container/glass/barrel/water
+	name = "water canister"
+	desc = "A semi-large canister full of water. The spout on the side allows you to fill bottles and canteens. Not to be mistaken for the similarly stored hydrogen."
+	icon_state = "sbarrel_water"
+
+/obj/item/reagent_container/glass/barrel/water/Initialize()
+	. = ..()
+	reagents.add_reagent("water", 240)
+
+/obj/item/reagent_container/glass/barrel/liquidhydrogen
+	name = "liquid hydrogen canister"
+	desc = "A semi-large and inconvenient to hold canister full of liquid hydrogen for fueling up various vehicles. A large warning label on the side says 'NOT FOR CONSUMPTION'."
+	icon_state = "sbarrel_hydrogen"
+
+/obj/item/reagent_container/glass/barrel/liquidhydrogen/Initialize()
+	. = ..()
+	reagents.add_reagent("liquidhydrogen", 240)

@@ -77,10 +77,10 @@ GLOBAL_LIST_INIT(frozen_items, list(SQUAD_MARINE_1 = list(), SQUAD_MARINE_2 = li
 	var/dat
 
 	dat += "<i>Welcome, [user.real_name].</i><br/><br/><hr/>"
-	dat += "<a href='?src=\ref[src];log=1'>View storage log</a>.<br>"
-	dat += "<a href='?src=\ref[src];view=1'>View objects</a>.<br>"
-	dat += "<a href='?src=\ref[src];item=1'>Recover object</a>.<br>"
-	dat += "<a href='?src=\ref[src];allitems=1'>Recover all objects</a>.<br>"
+	dat += "<a href='byond://?src=\ref[src];log=1'>View storage log</a>.<br>"
+	dat += "<a href='byond://?src=\ref[src];view=1'>View objects</a>.<br>"
+	dat += "<a href='byond://?src=\ref[src];item=1'>Recover object</a>.<br>"
+	dat += "<a href='byond://?src=\ref[src];allitems=1'>Recover all objects</a>.<br>"
 
 	show_browser(user, dat, "Cryogenic Oversight Control for [cryotype]", "cryopod_console")
 
@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(frozen_items, list(SQUAD_MARINE_1 = list(), SQUAD_MARINE_2 = li
 //Cryopods themselves.
 /obj/structure/machinery/cryopod
 	name = "hypersleep chamber"
-	desc = "A large automated capsule with LED displays intended to put anyone inside into 'hypersleep', a form of non-cryogenic statis used on most ships."
+	desc = "A large automated capsule with LED displays intended to put anyone inside into 'hypersleep', a form of non-cryogenic stasis used on most ships."
 	icon = 'icons/obj/structures/machinery/cryogenics.dmi'
 	icon_state = "hypersleep_open"
 	density = TRUE
@@ -636,3 +636,29 @@ GLOBAL_LIST_INIT(frozen_items, list(SQUAD_MARINE_1 = list(), SQUAD_MARINE_2 = li
 
 	occupant.mind.transfer_to(new_player)
 	SEND_SIGNAL(occupant, COMSIG_MOB_END_TUTORIAL)
+
+// halo cryo
+
+/obj/structure/machinery/cryopod/big/halo
+	name = "cryo pod"
+	desc = "A large metal capsule with a glass cover, intended to store non-essential personnel during long slipspace jumps."
+	icon = 'icons/halo/obj/structures/machinery/64x64cryogenics.dmi'
+	icon_state = "map_tool"
+	dir = WEST
+	bound_height = 64
+	bound_width = 64
+	occupant_angle = 65
+	occupant_x = 16
+	occupant_y = 8
+
+/obj/structure/machinery/cryopod/big/halo/flipped
+	dir = EAST
+	bound_x = -32
+	pixel_x = -32
+	occupant_angle = 295
+	occupant_x = 16
+	occupant_y = 8
+
+/obj/structure/machinery/cryopod/big/halo/Initialize()
+	. = ..()
+	icon_state = "cryo_base"

@@ -3,6 +3,7 @@
 	name = "head"
 	icon = 'icons/obj/items/clothing/hats.dmi'
 	flags_armor_protection = BODY_FLAG_HEAD
+	flags_bodypart_hidden = BODY_FLAG_HEAD
 	flags_equip_slot = SLOT_HEAD
 	w_class = SIZE_SMALL
 	blood_overlay_type = "helmet"
@@ -181,8 +182,8 @@
 	)
 
 /obj/item/clothing/head/headset
-	name = "\improper USCM headset"
-	desc = "A headset typically found in use by radio-operators and officers. This one appears to be malfunctioning."
+	name = "\improper UNSC headset"
+	desc = "A large headset used in conjunction with the standard one. Large enough that it doesn't fit with any other headwear. Typically found in use by radio-operators and officers."
 	icon_state = "headset"
 	icon = 'icons/obj/items/clothing/cm_hats.dmi'
 	item_icons = list(
@@ -207,8 +208,8 @@
 	)
 
 /obj/item/clothing/head/cmcap
-	name = "patrol cap"
-	desc = "A patrol cap issued as part of the non-combat uniform. While it only protects from the sun, it's much more comfortable than a helmet."
+	name = "utility cap"
+	desc = "A utility cap issued as part of the non-combat uniform. While it only protects from the sun, it's much more comfortable than a helmet."
 	icon_state = "cap"
 	icon = 'icons/obj/items/clothing/cm_hats.dmi'
 	flags_atom = FPRINT|NO_SNOW_TYPE
@@ -368,39 +369,44 @@
 	icon_state = "booniehat_snow"
 
 /obj/item/clothing/head/cmcap/co
-	name = "\improper USCM Commanding officer cap"
+	name = "\improper UNSC Commanding officer cap"
 	icon_state = "cocap"
-	desc = "A hat usually worn by senior officers in the USCM. While it provides no protection, some officers wear it in the field to make themselves more recognisable."
+	desc = "A hat usually worn by senior officers in the UNSC. While it provides no protection, some officers wear it in the field to make themselves more recognisable."
 
 /obj/item/clothing/head/cmcap/co/formal
-	name = "\improper USCM formal Commanding Officer's white cap"
+	name = "\improper UNSC formal Commanding Officer's white cap"
 	icon_state = "co_formalhat_white"
-	desc = "A formal cover worn by senior officers of the USCM."
+	desc = "A formal cover worn by senior officers of the UNSC."
 	flags_marine_hat = HAT_GARB_OVERLAY
 
 /obj/item/clothing/head/cmcap/co/formal/black
-	name = "\improper USCM formal Commanding Officer's black cap"
+	name = "\improper UNSC formal Commanding Officer's black cap"
 	icon_state = "co_formalhat_black"
 
 /obj/item/clothing/head/cmcap/khaki
-	name = "\improper khaki patrol cap"
-	desc = "A khaki patrol cap."
+	name = "\improper khaki utility cap"
+	desc = "A khaki utility cap"
 	icon_state = "cap_khaki"
 
 /obj/item/clothing/head/cmcap/snow
-	name = "\improper coldweather patrol cap"
-	desc = "A patrol cap worn in cold weather environments."
+	name = "\improper coldweather utility cap"
+	desc = "A utility cap worn in cold weather environments."
 	icon_state = "cap_snow"
 
 /obj/item/clothing/head/cmcap/desert
-	name = "\improper desert patrol cap"
-	desc = "A desert BDU patrol cap."
+	name = "\improper desert utility cap"
+	desc = "A desert BDU utility cap."
 	icon_state = "cap_desert"
 
 /obj/item/clothing/head/cmcap/bridge
-	name = "\improper USCM operations cap"
-	desc = "A hat usually worn by officers in the USCM. While it provides no protection, some officers wear it in the field to make themselves more recognisable."
+	name = "\improper green UNSC operations cap"
+	desc = "A thicker headcover designed by the Colonial Marines to withstand the elements better out in the field or while performing maintenance. Thicker materials and colored in OD green, the letters 'UNSC' are boldy placed in black letters on the front."
 	icon_state = "cap_operations"
+
+/obj/item/clothing/head/cmcap/bridge/tan
+	name = "\improper khaki USCM operations cap"
+	desc = "A thicker headcover designed by the Colonial Marines to withstand the elements better out in the field or while performing maintenance. Thicker materials and colored in desert tan, the letters 'USCM' are boldy placed in black letters on the front."
+	icon_state = "cap_khaki"
 
 /obj/item/clothing/head/cmcap/flap
 	name = "\improper jungle expedition cap"
@@ -408,6 +414,7 @@
 	icon = 'icons/obj/items/clothing/cm_hats.dmi'
 	icon_state = "flapcap_jungle"
 	flags_marine_hat = HAT_GARB_OVERLAY
+
 /obj/item/clothing/head/cmcap/flap/desert
 	name = "\improper desert expedition cap"
 	icon_state = "flapcap_desert"
@@ -417,11 +424,22 @@
 	desc = "A casual cap issued as part of the non-combat uniform. While it only protects from the wind and snow, it's much more comfortable than a helmet. This one comes with flaps to keep your neck and ears warm."
 	icon_state = "flapcap_snow"
 
+/obj/item/clothing/head/cmcap/flap/canc
+	name = "\improper flapcap"
+	desc = "A casual cap issued as part of the non-combat uniform in the colors of CANC military."
+	icon_state = "canc_flapcap"
+
 /obj/item/clothing/head/cmcap/reporter
 	name = "combat correspondent cap"
 	desc = "A faithful cap for any terrain war correspondents may find themselves in."
 	icon_state = "cc_flagcap"
 	item_state = "cc_flagcap"
+
+/obj/item/clothing/head/cmcap/weyyu
+	name = "\improper Weyland-Yutani cap"
+	desc = "An offwhite cap worn by Weyland-Yutani security personnel."
+	icon_state = "pmc_hat"
+	flags_marine_hat = HAT_GARB_OVERLAY
 
 /obj/item/clothing/head/cmo
 	name = "\improper Chief Medical Officer's Peaked Cap"
@@ -433,23 +451,32 @@
 	)
 
 /obj/item/clothing/head/cmcap/corrections
-	name = "dark blue patrol cap"
-	desc = "A dark blue patrol cap."
+	name = "dark blue utility cap"
+	desc = "A dark blue utility cap."
 	icon_state = "corrections"
 	item_state = "corrections"
+
+/obj/item/clothing/head/cmcap/oni
+	name = "\improper ONI security forces patrol cap"
+	desc = "A black patrol cap, with the insignia of ONI in the center."
+	icon = 'icons/halo/obj/items/clothing/hats/hats_by_faction/hat_unsc.dmi'
+	item_icons = list(
+		WEAR_HEAD = 'icons/halo/mob/humans/onmob/clothing/hats/hats_by_faction/hat_unsc.dmi'
+	)
+	icon_state = "oni_cap"
 
 //============================//BERETS\\=================================\\
 //=======================================================================\\
 //Berets DO NOT have armor, so they have their own category. PMC caps are helmets, so they're in helmets.dm.
 /obj/item/clothing/head/beret/marine
 	name = "marine officer beret"
-	desc = "A beret with the USCM insignia emblazoned on it. It radiates respect and authority."
+	desc = "A beret with the UNSC insignia emblazoned on it. It radiates respect and authority."
 	icon_state = "beret_badge"
 
 /obj/item/clothing/head/beret/marine/mp
-	name = "\improper USCM MP beret"
+	name = "\improper UNSC MP beret"
 	icon_state = "beretred"
-	desc = "A beret with the USCM Military Police insignia emblazoned on it."
+	desc = "A beret with the UNSC Military Police insignia emblazoned on it."
 	icon = 'icons/obj/items/clothing/cm_hats.dmi'
 	item_icons = list(
 		WEAR_HEAD = 'icons/mob/humans/onmob/head_1.dmi'
@@ -457,44 +484,39 @@
 	black_market_value = 25
 
 /obj/item/clothing/head/beret/marine/mp/warden
-	name = "\improper USCM MP warden peaked cap"
+	name = "\improper UNSC MP warden peaked cap"
 	icon_state = "warden"
-	desc = "A peaked cap with the USCM Military Police Lieutenant insignia emblazoned on it. It is typically used by Wardens on USCM ships."
+	desc = "A peaked cap with the UNSC Military Police Lieutenant insignia emblazoned on it. It is typically used by Wardens on UNSC ships."
 
 /obj/item/clothing/head/beret/marine/mp/cmp
-	name = "\improper USCM chief MP beret"
-	desc = "A beret with the USCM Military Police First Lieutenant insignia emblazoned on it. It shines with the glow of corrupt authority and a smudge of doughnut."
+	name = "\improper UNSC chief MP beret"
+	desc = "A beret with the UNSC Military Police First Lieutenant insignia emblazoned on it. It shines with the glow of corrupt authority and a smudge of doughnut."
 	icon_state = "beretwo"
 	black_market_value = 30
 
 /obj/item/clothing/head/beret/marine/mp/mppeaked
-	name = "\improper USCM MP peaked cap"
-	desc = "A peaked cap worn by the USCM's Military Police. Something about it reminds you of an event you once read about in a history book."
+	name = "\improper UNSC MP peaked cap"
+	desc = "A peaked cap worn by the UNSC's Military Police. Something about it reminds you of an event you once read about in a history book."
 	icon_state = "mppeaked"
 
 /obj/item/clothing/head/beret/marine/mp/mpcap
-	name = "\improper USCM MP ball-cap"
-	desc = "A ball-cap, typically worn by the more casual of the USCM's Military Police."
+	name = "\improper UNSC MP ball-cap"
+	desc = "A ball-cap, typically worn by the more casual of the UNSC's Military Police."
 	icon_state = "mpcap"
 
 /obj/item/clothing/head/beret/marine/mp/provost
-	name = "\improper USCM provost beret"
+	name = "\improper UNSC provost beret"
 	icon_state = "beretwo"
-	desc = "A beret with the USCM Military Police insignia emblazoned on it."
+	desc = "A beret with the UNSC Military Police insignia emblazoned on it."
 
 /obj/item/clothing/head/beret/marine/mp/provost/senior
-	name = "\improper USCM senior provost beret"
+	name = "\improper UNSC senior provost beret"
 	icon_state = "coblackberet"
-	desc = "A beret with the USCM Military Police insignia emblazoned on it."
+	desc = "A beret with the UNSC Military Police insignia emblazoned on it."
 
 /obj/item/clothing/head/beret/marine/mp/provost/chief
-	name = "\improper USCM provost command beret"
+	name = "\improper UNSC provost command beret"
 	icon_state = "pvciberet"
-
-/obj/item/clothing/head/beret/marine/mp/tis
-	name = "\improper UAAC-TIS Special Agent Beret"
-	icon_state = "berettis"
-	desc = "A beret with the UAAC-TIS insignia emblazoned on it. A mark of a TIS Special Agent, these berets are one of the only pieces of equipment that the TIS actually manufactures for itself and earning one is one of the rare signs of achievement the Three Eyes allows."
 
 /obj/item/clothing/head/beret/marine/commander
 	name = "marine commanding officer beret"
@@ -580,7 +602,7 @@
 	icon_state = "beret_badge"
 
 /obj/item/clothing/head/beret/marine/ro
-	name = "\improper USCM quartermaster beret"
+	name = "\improper UNSC quartermaster beret"
 	desc = "A beret with the sergeant insignia emblazoned on it. It symbolizes hard work and shady business."
 	icon = 'icons/obj/items/clothing/cm_hats.dmi'
 	icon_state = "ro_beret"
@@ -667,22 +689,12 @@
 
 /obj/item/clothing/head/CMB
 	name = "\improper Colonial Marshal Bureau cap"
-	desc = "A black cap boldly presenting the acronym 'CMB'. Made using durable fabric, it might stop a very low caliber round from penetrating it, or a stab from piercing it. That isn't to say you won't have a dent in your head."
+	desc = "A black cap boldly presenting the acronym 'CMB'."
 	icon = 'icons/obj/items/clothing/cm_hats.dmi'
 	item_icons = list(
 		WEAR_HEAD = 'icons/mob/humans/onmob/head_1.dmi'
 	)
 	icon_state = "cmbcap"
-	flags_armor_protection = BODY_FLAG_HEAD
-	armor_melee = CLOTHING_ARMOR_MEDIUMLOW
-	armor_bullet = CLOTHING_ARMOR_MEDIUMLOW
-	armor_energy = CLOTHING_ARMOR_MEDIUMLOW
-	armor_bomb = CLOTHING_ARMOR_MEDIUMLOW
-	armor_bio = CLOTHING_ARMOR_LOW
-	armor_internaldamage = CLOTHING_ARMOR_MEDIUMLOW
-	flags_cold_protection = BODY_FLAG_HEAD
-	min_cold_protection_temperature = ICE_PLANET_MIN_COLD_PROT
-	flags_inventory = BLOCKSHARPOBJ
 	flags_inv_hide = NO_FLAGS
 
 /obj/item/clothing/head/freelancer
@@ -775,12 +787,19 @@
 	desc = "An improvised head wrap made out of a black neckerchief. Great for keeping the sweat out of your eyes and protecting your hair."
 	icon = 'icons/obj/items/clothing/cm_hats.dmi'
 
-/obj/item/clothing/head/durag/Initialize(mapload, ...)
-	. = ..()
-	select_gamemode_skin(/obj/item/clothing/head/durag)
+/obj/item/clothing/head/skullcap
+	name = "skullcap"
+	desc = "A head wrap. Great for keeping the sweat out of your eyes and protecting your hair."
+	icon_state = "skullcap"
+	icon = 'icons/obj/items/clothing/cm_hats.dmi'
+	flags_atom = NO_SNOW_TYPE
+	flags_inv_hide = HIDETOPHAIR
+	item_icons = list(
+		WEAR_HEAD = 'icons/mob/humans/onmob/head_1.dmi'
+	)
 
 /obj/item/clothing/head/drillhat
-	name = "\improper USCM drill hat"
+	name = "\improper UNSC drill hat"
 	desc = "A formal hat worn by drill sergeants. Police that moustache."
 	icon_state = "drillhat"
 	icon = 'icons/obj/items/clothing/cm_hats.dmi'
@@ -836,17 +855,23 @@
 	icon_state = "rmc_turban"
 	item_state = "rmc_turban"
 
-/obj/item/clothing/head/beret/royal_marine
+/obj/item/clothing/head/cmcap/royal_marine
 	name = "royal marine beret"
-	desc = "A green beret belonging to the royal marines commando. This beret symbolizes a royal marines ability to fight in any environment, desert, sea, artic or space a royal marine will always be ready."
+	desc = "A green beret worn by the TWE's Royal Marine Commandos. Wear it with pride."
 	icon_state = "rmc_beret"
 	item_state = "rmc_beret"
 	icon = 'icons/obj/items/clothing/cm_hats.dmi'
+	flags_marine_hat = HAT_GARB_OVERLAY
 	flags_atom = NO_NAME_OVERRIDE|NO_SNOW_TYPE
 	item_icons = list(
 		WEAR_HEAD = 'icons/mob/humans/onmob/head_1.dmi'
 	)
+	allowed_hat_items = list(
+		/obj/item/prop/helmetgarb/helmet_nvg = "icon_state",
+		/obj/item/prop/helmetgarb/helmet_nvg/cosmetic = "icon_state",
+		/obj/item/prop/helmetgarb/helmet_nvg/marsoc = "icon_state",
+	)
 
-/obj/item/clothing/head/beret/royal_marine/team_leader
-	icon_state = "rmc_beret_tl"
-	item_state = "rmc_beret_tl"
+/obj/item/clothing/head/marine/peaked/service/ueg
+	name = "\improper UEG police chief peaked cap"
+	desc = "A peaked cap used within the UEG Police forces to denote rank and authority of some kind."

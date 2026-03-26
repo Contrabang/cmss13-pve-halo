@@ -1,6 +1,6 @@
 /obj/item/hardpoint/primary/minigun
 	name = "\improper LTAA-AP Minigun"
-	desc = "A primary weapon for tanks that spews bullets"
+	desc = "A primary LTAA Minigun utelizing AP ammo for tanks. Its six barrels are heavy and take a bit to fully spin up."
 
 	icon_state = "ltaaap_minigun"
 	disp_icon = "tank"
@@ -10,7 +10,7 @@
 	firing_arc = 90
 
 	ammo = new /obj/item/ammo_magazine/hardpoint/ltaaap_minigun
-	max_clips = 2
+	max_clips = 4
 
 	px_offsets = list(
 		"1" = list(0, 21),
@@ -20,10 +20,10 @@
 	)
 
 	muzzle_flash_pos = list(
-		"1" = list(0, 57),
-		"2" = list(0, -67),
-		"4" = list(77, 0),
-		"8" = list(-77, 0)
+		"1" = list(0, 63),
+		"2" = list(0, -73),
+		"4" = list(83, 0),
+		"8" = list(-83, 0)
 	)
 
 	scatter = 3
@@ -31,11 +31,11 @@
 	gun_firemode_list = list(
 		GUN_FIREMODE_AUTOMATIC,
 	)
-	fire_delay = 0.2 SECONDS //base fire rate, modified by stage_delay_mult
+	fire_delay = 0.1 SECONDS //base fire rate, modified by stage_delay_mult
 
 	activation_sounds = list('sound/weapons/gun_minigun.ogg')
 	/// Active firing time to reach max spin_stage.
-	var/spinup_time = 8 SECONDS
+	var/spinup_time = 3 SECONDS
 	/// Grace period before losing spin_stage.
 	var/spindown_grace_time = 2 SECONDS
 	COOLDOWN_DECLARE(spindown_grace_cooldown)

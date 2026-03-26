@@ -20,7 +20,6 @@
 	name = "combat netting"
 	desc = "Probably combat netting for a helmet. Probably just an extra hairnet that got ordered for the phantom Almayer cooking staff. Probably useless."
 	icon_state = "netting"
-	flags_obj = OBJ_NO_HELMET_BAND
 
 /obj/item/prop/helmetgarb/spent_buckshot
 	name = "spent buckshot"
@@ -52,13 +51,11 @@
 	name = "raincover"
 	desc = "The standard M10 combat helmet is already water-resistant at depths of up to 10 meters. This makes the top potentially water-proof. At least it's something."
 	icon_state = "raincover"
-	flags_obj = OBJ_NO_HELMET_BAND
 
 /obj/item/prop/helmetgarb/camocover
 	name = "jungle helmet cover"
 	desc = "A cover that goes over the top of an M10 pattern helmet to camoflauge it without needing the use of paints."
 	icon_state = "camocover"
-	flags_obj = OBJ_NO_HELMET_BAND
 
 /obj/item/prop/helmetgarb/camocover/snow
 	name = "snow helmet cover"
@@ -470,6 +467,15 @@
 /obj/item/prop/helmetgarb/helmet_nvg/cosmetic/break_nvg(mob/living/carbon/human/user, list/slashdata, mob/living/carbon/xenomorph/Xeno)
 	return
 
+/obj/item/prop/helmetgarb/helmet_nvg/cosmetic/larp //something that better fits for the USCM
+	name = "old M1 multi-spectrum visor"
+	desc = "A failed prototype for next generation HUD optics for the Colonial Marines that was surpased by the current issue integrated IR optic, this flip down visor offers a full visor suite with multi-spectrum capabilities. A really cool piece until you realize you are one headbang away from losing night capability."
+	icon_state = "larp"
+	active_powered_icon_state = "larp_down_powered"
+	active_icon_state = "larp_down"
+	inactive_icon_state = "larp"
+
+
 /obj/item/prop/helmetgarb/helmet_nvg/marsoc //for Marine Raiders
 	name = "\improper Tactical M3 night vision goggles"
 	desc = "With an integrated self-recharging battery, nothing can stop you. Put them on your helmet and press the button and it's go-time."
@@ -606,3 +612,18 @@
 	icon = 'icons/obj/items/spray.dmi'
 	icon_state = "pestspray"
 	w_class = SIZE_SMALL
+
+/obj/item/prop/helmetgarb/eye_drops
+	name = "eye drops"
+	desc = "A small bottle of lubricating eye drops. Keeps your peepers wet and working."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "eye_drops"
+	COOLDOWN_DECLARE(last_eye_drops)
+
+/obj/item/prop/helmetgarb/eye_drops/attack_self(mob/user)
+	. = ..()
+	if(!COOLDOWN_FINISHED(src, last_eye_drops))
+		return
+	user.visible_message(SPAN_NOTICE("[user] squeezes a few drops into their eye."), SPAN_NOTICE("You squeeze a few drops into your eye."))
+	user.apply_effect(5, EYE_BLUR)
+	COOLDOWN_START(src, last_eye_drops, 2.5 SECONDS)

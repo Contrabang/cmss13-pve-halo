@@ -167,6 +167,8 @@
 // SPECIES TRAITS
 /// Knowledge of Yautja technology
 #define TRAIT_YAUTJA_TECH "t_yautja_tech"
+/// Knowledge of Covenant technology
+#define TRAIT_COV_TECH "t_cov_tech"
 /// Absolutely RIPPED. Can do misc. heavyweight stuff others can't. (Yautja, Synths)
 #define TRAIT_SUPER_STRONG "t_super_strong"
 /// Foreign biology. Basic medHUDs won't show the mob. (Yautja, Zombies)
@@ -310,6 +312,7 @@
 //List of all traits
 GLOBAL_LIST_INIT(mob_traits, list(
 	TRAIT_YAUTJA_TECH,
+	TRAIT_COV_TECH,
 	TRAIT_SUPER_STRONG,
 	TRAIT_FOREIGN_BIO,
 	TRAIT_INTENT_EYES,
@@ -341,6 +344,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"TRAIT_DAZED" = TRAIT_DAZED,
 		"TRAIT_UNDENSE" = TRAIT_UNDENSE,
 		"TRAIT_YAUTJA_TECH" = TRAIT_YAUTJA_TECH,
+		"TRAIT_COV_TECH" = TRAIT_COV_TECH,
 		"TRAIT_SUPER_STRONG" = TRAIT_SUPER_STRONG,
 		"TRAIT_FOREIGN_BIO" = TRAIT_FOREIGN_BIO,
 		"TRAIT_INTENT_EYES" = TRAIT_INTENT_EYES,
@@ -459,6 +463,8 @@ GLOBAL_LIST(trait_name_map)
 #define XENO_NEST_TRAIT "xeno_nest"
 ///Status trait from a generic throw by xeno abilities
 #define XENO_THROW_TRAIT "xeno_throw_trait"
+///Status traits from paradropping
+#define TRAIT_SOURCE_PARADROPPING "t_s_paradropping"
 //-- structure traits --
 ///Status trait coming from being flipped or unflipped.
 #define TRAIT_SOURCE_FLIP_TABLE "t_s_flip_table"
@@ -509,5 +515,7 @@ GLOBAL_LIST(trait_name_map)
 #define HACKED_TRAIT "hacked"
 /// traits from chloroform usage
 #define CHLOROFORM_TRAIT "chloroform"
+/// traits from throat-slitting
+#define THROATSLIT_TRAIT "throat_slit"
 /// traits from wall hiding
 #define WALL_HIDING_TRAIT "wallhiding"

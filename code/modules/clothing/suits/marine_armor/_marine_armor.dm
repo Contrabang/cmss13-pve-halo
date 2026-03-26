@@ -84,6 +84,7 @@
 
 	light_power = 3
 	light_range = 4
+	light_color = LIGHT_COLOR_TUNGSTEN
 	light_system = MOVABLE_LIGHT
 
 	var/flashlight_cooldown = 0 //Cooldown for toggling the light
@@ -100,6 +101,7 @@
 	pickup_sound = "armorequip"
 	drop_sound = "armorequip"
 	equip_sounds = list('sound/handling/putting_on_armor1.ogg')
+	has_light = TRUE
 	var/armor_variation = 0
 	/// The dmi where the grayscale squad overlays are contained
 	var/squad_overlay_icon = 'icons/mob/humans/onmob/suit_1.dmi'
@@ -588,7 +590,6 @@
 	armor_bomb = CLOTHING_ARMOR_HIGH
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 	specialty = "M3-T light"
-	flags_item = MOB_LOCK_ON_EQUIP|NO_CRYO_STORE
 	unacidable = TRUE
 
 /obj/item/clothing/suit/storage/marine/M3S
@@ -598,7 +599,6 @@
 	armor_melee = CLOTHING_ARMOR_MEDIUMHIGH
 	slowdown = SLOWDOWN_ARMOR_LIGHT
 	specialty = "M3-S light"
-	flags_item = MOB_LOCK_ON_EQUIP|NO_CRYO_STORE
 	unacidable = TRUE
 
 //==================Combat Correspondent==================\\
@@ -609,29 +609,8 @@
 	icon_state = "cc_armor"
 	flags_atom = NO_SNOW_TYPE|NO_NAME_OVERRIDE
 
-//==================PLU Lamp Rig==================\\
-
-/obj/item/clothing/suit/storage/marine/veteran/lamp
-	name = "\improper PLU lamp rig"
-	icon_state = "lamp_rig"
-	desc = "A lightweight rig designed to support a shoulder lamp."
-	blood_overlay_type = "coat"
-	flags_armor_protection = BODY_FLAG_CHEST
-	flags_cold_protection = BODY_FLAG_CHEST
-	min_cold_protection_temperature = null
-	armor_melee = CLOTHING_ARMOR_NONE
-	armor_bullet = CLOTHING_ARMOR_NONE
-	armor_laser = CLOTHING_ARMOR_NONE
-	armor_energy = CLOTHING_ARMOR_NONE
-	armor_bomb = CLOTHING_ARMOR_LOW //marginally better against shrapnel.
-	armor_bio = CLOTHING_ARMOR_NONE
-	armor_rad = CLOTHING_ARMOR_NONE
-	armor_internaldamage = CLOTHING_ARMOR_NONE
-	storage_slots = 1
-	time_to_unequip = 10
-	time_to_equip = 10
-
 //==================USASF & ARMY==================\\
+
 /obj/item/clothing/suit/storage/marine/medium/rto/navy
 	name = "\improper M4 pattern naval-deployment armor"
 	desc = "A set of USASF acquired M4 armor, modified to fit the needs of the members that see deployment on the surface of worlds. Robust, yet very nimble, with room for all your pouches."
@@ -653,13 +632,14 @@
 	icon_state = "1"
 	item_state = "marine_armor" //Make unique states for Officer & Intel armors.
 	item_icons = list(
-		WEAR_JACKET = 'icons/halo/mob/humans/onmob/suit_1.dmi'
+		WEAR_JACKET = 'icons/mob/humans/onmob/suit_1.dmi'
 	)
 	flags_atom = FPRINT|CONDUCT
 	flags_inventory = BLOCKSHARPOBJ
 	flags_armor_protection = BODY_FLAG_CHEST|BODY_FLAG_GROIN|BODY_FLAG_ARMS|BODY_FLAG_LEGS
 	flags_cold_protection = BODY_FLAG_CHEST|BODY_FLAG_GROIN|BODY_FLAG_ARMS|BODY_FLAG_LEGS
 	flags_heat_protection = BODY_FLAG_CHEST|BODY_FLAG_GROIN|BODY_FLAG_ARMS|BODY_FLAG_LEGS
+	flags_bodypart_hidden = BODY_FLAG_CHEST
 	min_cold_protection_temperature = HELMET_MIN_COLD_PROT
 	max_heat_protection_temperature = HELMET_MAX_HEAT_PROT
 	blood_overlay_type = "armor"
@@ -694,18 +674,31 @@
 		/obj/item/device/walkman,
 		/obj/item/storage/belt/gun/m39,
 	)
-	valid_accessory_slots = list(ACCESSORY_SLOT_MEDAL, ACCESSORY_SLOT_DECORARMOR, ACCESSORY_SLOT_DECORGROIN, ACCESSORY_SLOT_DECORSHIN, ACCESSORY_SLOT_DECORBRACER, ACCESSORY_SLOT_DECORNECK, ACCESSORY_SLOT_PAINT, ACCESSORY_SLOT_M3UTILITY, ACCESSORY_SLOT_PONCHO, ACCESSORY_SLOT_DECORKNEE)
-	restricted_accessory_slots = list(ACCESSORY_SLOT_DECORARMOR, ACCESSORY_SLOT_DECORGROIN, ACCESSORY_SLOT_DECORBRACER, ACCESSORY_SLOT_DECORNECK, ACCESSORY_SLOT_DECORSHIN, ACCESSORY_SLOT_M3UTILITY, ACCESSORY_SLOT_PAINT, ACCESSORY_SLOT_DECORKNEE)
+	valid_accessory_slots = list(
+		ACCESSORY_SLOT_MEDAL,
+		ACCESSORY_SLOT_PAINT,
+		ACCESSORY_SLOT_M3UTILITY,
+		ACCESSORY_SLOT_PONCHO,
+		ACCESSORY_SLOT_DECORNECK,
+		ACCESSORY_SLOT_DECORARMOR,
+		ACCESSORY_SLOT_DECORBRACER,
+		ACCESSORY_SLOT_DECORGROIN,
+		ACCESSORY_SLOT_DECORKNEE,
+		ACCESSORY_SLOT_DECORSHIN,
+	)
+	restricted_accessory_slots = list(
+		ACCESSORY_SLOT_M3UTILITY,
+		ACCESSORY_SLOT_PAINT,
+		ACCESSORY_SLOT_DECORNECK,
+		ACCESSORY_SLOT_DECORARMOR,
+		ACCESSORY_SLOT_DECORBRACER,
+		ACCESSORY_SLOT_DECORGROIN,
+		ACCESSORY_SLOT_DECORKNEE,
+		ACCESSORY_SLOT_DECORSHIN,
+	)
 
-	light_power = 3
-	light_range = 4
-	light_system = MOVABLE_LIGHT
-
-	var/flashlight_cooldown = 0 //Cooldown for toggling the light
 	var/locate_cooldown = 0 //Cooldown for SL locator
-	var/armor_overlays[]
-	actions_types = list(/datum/action/item_action/toggle)
-	var/flags_marine_armor = ARMOR_SQUAD_OVERLAY|ARMOR_LAMP_OVERLAY
+	var/flags_marine_armor = ARMOR_SQUAD_OVERLAY
 	var/specialty = "M3 pattern marine" //Same thing here. Give them a specialty so that they show up correctly in vendors. speciality does NOTHING if you have NO_NAME_OVERRIDE
 	w_class = SIZE_HUGE
 	uniform_restricted = null
@@ -716,11 +709,10 @@
 	pickup_sound = "armorequip"
 	drop_sound = "armorequip"
 	equip_sounds = list('sound/handling/putting_on_armor1.ogg')
+	has_light = FALSE
 	var/armor_variation = 0
 	/// The dmi where the grayscale squad overlays are contained
 	var/squad_overlay_icon = 'icons/mob/humans/onmob/suit_1.dmi'
-
-	var/atom/movable/marine_light/light_holder
 
 /obj/item/clothing/suit/marine/Initialize(mapload)
 	. = ..()
@@ -729,29 +721,9 @@
 
 	if(!(flags_atom & NO_SNOW_TYPE))
 		select_gamemode_skin(type)
-	armor_overlays = list("lamp") //Just one for now, can add more later.
 	if(armor_variation && mapload)
 		post_vendor_spawn_hook()
 	update_icon()
-
-	light_holder = new(src)
-
-/obj/item/clothing/suit/marine/Destroy()
-	QDEL_NULL(light_holder)
-	return ..()
-
-/obj/item/clothing/suit/marine/update_icon(mob/user)
-	var/image/I
-	armor_overlays["lamp"] = null
-	if(flags_marine_armor & ARMOR_LAMP_OVERLAY)
-		if(flags_marine_armor & ARMOR_LAMP_ON)
-			I = image('icons/obj/items/clothing/cm_suits.dmi', src, "lamp-on")
-		else
-			I = image('icons/obj/items/clothing/cm_suits.dmi', src, "lamp-off")
-		armor_overlays["lamp"] = I
-		overlays += I
-	else armor_overlays["lamp"] = null
-	if(user) user.update_inv_wear_suit()
 
 /obj/item/clothing/suit/marine/MouseDrop(obj/over_object as obj)
 	if (ishuman(usr))
@@ -785,54 +757,12 @@
 	icon_state = replacetext(icon_state,"1","[new_look]")
 	update_icon(user)
 
-/obj/item/clothing/suit/marine/attack_self(mob/user)
-	..()
-
-	if(!isturf(user.loc))
-		to_chat(user, SPAN_WARNING("You cannot turn the light [light_on ? "off" : "on"] while in [user.loc].")) //To prevent some lighting anomalies.
-		return
-
-	if(flashlight_cooldown > world.time)
-		return
-	if(!ishuman(user))
-		return
-
-	var/mob/living/carbon/human/H = user
-	if(H.wear_suit != src)
-		return
-
-	turn_light(user, !light_on)
-
 /obj/item/clothing/suit/marine/item_action_slot_check(mob/user, slot)
 	if(!ishuman(user))
 		return FALSE
 	if(slot != WEAR_JACKET)
 		return FALSE
 	return TRUE //only give action button when armor is worn.
-
-/obj/item/clothing/suit/marine/turn_light(mob/user, toggle_on)
-	. = ..()
-	if(. != CHECKS_PASSED)
-		return
-	set_light_range(initial(light_range))
-	set_light_power(FLOOR(initial(light_power) * 0.5, 1))
-	set_light_on(toggle_on)
-	flags_marine_armor ^= ARMOR_LAMP_ON
-
-	light_holder.set_light_flags(LIGHT_ATTACHED)
-	light_holder.set_light_range(initial(light_range))
-	light_holder.set_light_power(initial(light_power))
-	light_holder.set_light_on(toggle_on)
-
-	if(!toggle_on)
-		playsound(src, 'sound/handling/click_2.ogg', 50, 1)
-
-	playsound(src, 'sound/handling/suitlight_on.ogg', 50, 1)
-	update_icon(user)
-
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.update_button_icon()
 
 /obj/item/clothing/suit/marine/mob_can_equip(mob/living/carbon/human/M, slot, disable_warning = 0)
 	. = ..()
@@ -912,24 +842,17 @@
 	desc = "A well tinkered and crafted hybrid of Smart-Gunner mesh and M3 pattern plates. Robust, yet nimble, with room for all your pouches."
 	armor_bio = CLOTHING_ARMOR_MEDIUMHIGH
 	armor_rad = CLOTHING_ARMOR_MEDIUM
-	light_range = 5 //slightly higher
 	specialty = "M4 pattern marine"
-
-/obj/item/clothing/suit/marine/rto/intel
-	name = "\improper XM4 pattern intelligence officer armor"
-	uniform_restricted = list(/obj/item/clothing/under/marine/officer, /obj/item/clothing/under/rank/qm_suit, /obj/item/clothing/under/marine/officer/intel)
-	specialty = "XM4 pattern intel"
+	valid_accessory_slots = list(ACCESSORY_SLOT_MEDAL, ACCESSORY_SLOT_DECORARMOR, ACCESSORY_SLOT_DECORGROIN, ACCESSORY_SLOT_DECORSHIN, ACCESSORY_SLOT_DECORBRACER, ACCESSORY_SLOT_M3UTILITY, ACCESSORY_SLOT_PONCHO, ACCESSORY_SLOT_DECORKNEE)
+	restricted_accessory_slots = list(ACCESSORY_SLOT_DECORARMOR, ACCESSORY_SLOT_DECORGROIN, ACCESSORY_SLOT_DECORBRACER, ACCESSORY_SLOT_DECORSHIN, ACCESSORY_SLOT_M3UTILITY, ACCESSORY_SLOT_DECORKNEE)
 
 /obj/item/clothing/suit/marine/rto/forecon
 	name = "\improper M3-R pattern recon armor"
 	desc = "A modified Colonial Marines M3 Pattern Chestplate. Protects the chest from ballistic rounds, bladed objects and accidents. Issued mostly to recon units."
 	icon_state = "4"
 	flags_atom = NO_SNOW_TYPE|NO_NAME_OVERRIDE
-
-/obj/item/clothing/suit/marine/rto/forecon/Initialize(mapload)
-	. = ..()
-	var/obj/item/clothing/accessory/pads/greaves/greaves = new()
-	src.attach_accessory(null, greaves, TRUE)
+	valid_accessory_slots = list(ACCESSORY_SLOT_MEDAL, ACCESSORY_SLOT_DECORARMOR, ACCESSORY_SLOT_DECORGROIN, ACCESSORY_SLOT_DECORSHIN, ACCESSORY_SLOT_DECORBRACER, ACCESSORY_SLOT_DECORNECK, ACCESSORY_SLOT_PAINT, ACCESSORY_SLOT_M3UTILITY, ACCESSORY_SLOT_PONCHO, ACCESSORY_SLOT_DECORKNEE)
+	restricted_accessory_slots = list(ACCESSORY_SLOT_DECORARMOR, ACCESSORY_SLOT_DECORGROIN, ACCESSORY_SLOT_DECORBRACER, ACCESSORY_SLOT_DECORNECK, ACCESSORY_SLOT_DECORSHIN, ACCESSORY_SLOT_M3UTILITY, ACCESSORY_SLOT_PAINT, ACCESSORY_SLOT_DECORKNEE)
 
 /obj/item/clothing/suit/marine/leader
 	name = "\improper B12 pattern marine armor"
@@ -949,15 +872,99 @@
 	name = "\improper M3 pattern armor"
 	specialty = "M3 pattern"
 
+/obj/item/clothing/suit/marine/guard/Initialize(mapload)
+	. = ..()
+	var/obj/item/clothing/accessory/pads/groin/uacg/crotchplate = new()
+	src.attach_accessory(null, crotchplate, TRUE)
+
+//Army & USASF custom-armors\\
+
+/obj/item/clothing/suit/marine/medium/rto/navy
+	name = "\improper M4-N pattern armor"
+	desc = "A set of USASF acquired M4 armor, with slight modifications to better suite ship-side usage. Robust, yet very nimble, with room for all your pouches. Compatible with attachable components of the M3-pattern armor system."
+	icon_state = "navy"
+	item_state = "navy"
+	slowdown = SLOWDOWN_ARMOR_LIGHT    //carbon fibre and shit in the plates rather than heavy stuff, so the swabbies stay nimble
+	flags_atom = NO_SNOW_TYPE|NO_NAME_OVERRIDE
+
+/obj/item/clothing/suit/marine/medium/rto/navy/heavy
+	name = "\improper M4-N pattern shore-deployment armor"
+	desc = "A set of USASF acquired M4 armor, modified to fit the needs of the members that see deployment on the surface of worlds. Robust, yet very nimble, with room for all your pouches. Compatible with attachable components of the M3-pattern armor system."
+
+/obj/item/clothing/suit/marine/medium/rto/navy/heavy/Initialize(mapload)
+	. = ..()
+	var/obj/item/clothing/accessory/pads/groin/navy/crotchplate = new()
+	src.attach_accessory(null, crotchplate, TRUE)
+	var/obj/item/clothing/accessory/pads/greaves/navy/shinguards = new()
+	src.attach_accessory(null, shinguards, TRUE)
+	var/obj/item/clothing/accessory/pads/navy/shoulderpads = new()
+	src.attach_accessory(null, shoulderpads, TRUE)
+
+/obj/item/clothing/suit/marine/medium/rto/army
+	name = "\improper Personal Body Armor System"
+	desc = "Whilst it saw limited field-testing amongst the USCMC, the US Army adopted the M4 series pattern armor across the board under the PBAS program. Surprisingly uncomfortable, even compared to the old M3 series armor. At least it's compatible with attachable suplementary armor components of the M3 series."
+	icon_state = "io"
+	flags_atom = NO_SNOW_TYPE|NO_NAME_OVERRIDE
+	valid_accessory_slots = list(ACCESSORY_SLOT_MEDAL, ACCESSORY_SLOT_DECORARMOR, ACCESSORY_SLOT_DECORGROIN, ACCESSORY_SLOT_DECORSHIN, ACCESSORY_SLOT_DECORBRACER, ACCESSORY_SLOT_M3UTILITY, ACCESSORY_SLOT_PONCHO, ACCESSORY_SLOT_DECORKNEE)
+	restricted_accessory_slots = list(ACCESSORY_SLOT_DECORARMOR, ACCESSORY_SLOT_DECORGROIN, ACCESSORY_SLOT_DECORBRACER, ACCESSORY_SLOT_DECORSHIN, ACCESSORY_SLOT_M3UTILITY, ACCESSORY_SLOT_DECORKNEE)
+
+/obj/item/clothing/suit/marine/medium/rto/army/medium
+
+/obj/item/clothing/suit/marine/medium/rto/army/medium/Initialize(mapload)
+	. = ..()
+	var/obj/item/clothing/accessory/pads/groin/crotchplate = new()
+	src.attach_accessory(null, crotchplate, TRUE)
+	var/obj/item/clothing/accessory/pads/greaves/shinguards = new()
+	src.attach_accessory(null, shinguards, TRUE)
+	var/obj/item/clothing/accessory/pads/shoulderpads = new()
+	src.attach_accessory(null, shoulderpads, TRUE)
+
+/obj/item/clothing/suit/marine/medium/rto/army/heavy
+
+/obj/item/clothing/suit/marine/medium/rto/army/heavy/Initialize(mapload)
+	. = ..()
+	var/obj/item/clothing/accessory/pads/groin/crotchplate = new()
+	src.attach_accessory(null, crotchplate, TRUE)
+	var/obj/item/clothing/accessory/pads/greaves/shinguards = new()
+	src.attach_accessory(null, shinguards, TRUE)
+	var/obj/item/clothing/accessory/pads/shoulderpads = new()
+	src.attach_accessory(null, shoulderpads, TRUE)
+	var/obj/item/clothing/accessory/pads/bracers/armguards = new()
+	src.attach_accessory(null, armguards, TRUE)
+	var/obj/item/clothing/accessory/pads/kneepads/knees = new()
+	src.attach_accessory(null, knees, TRUE)
+
+//==================PLU Lamp Rig==================\\
+
+/obj/item/clothing/suit/marine/lamp
+	name = "\improper PLU lamp rig"
+	icon_state = "lamp_rig"
+	desc = "A lightweight rig designed to support a shoulder lamp."
+	flags_atom = NO_SNOW_TYPE|NO_NAME_OVERRIDE
+	blood_overlay_type = "coat"
+	flags_armor_protection = BODY_FLAG_CHEST
+	flags_cold_protection = BODY_FLAG_CHEST
+	min_cold_protection_temperature = null
+	slowdown = SLOWDOWN_ARMOR_NONE
+	armor_melee = CLOTHING_ARMOR_NONE
+	armor_bullet = CLOTHING_ARMOR_NONE
+	armor_laser = CLOTHING_ARMOR_NONE
+	armor_energy = CLOTHING_ARMOR_NONE
+	armor_bomb = CLOTHING_ARMOR_NONE
+	armor_bio = CLOTHING_ARMOR_NONE
+	armor_rad = CLOTHING_ARMOR_NONE
+	armor_internaldamage = CLOTHING_ARMOR_NONE
+	time_to_unequip = 10
+	time_to_equip = 10
 /obj/item/clothing/suit/marine/unsc
-	name = "M52B body armor"
+	name = "\improper M52B body armor"
 	desc = "Standard-issue to the UNSC Marine Corps, the M52B armor entered service by 2531 for use in the Human Covenant war, coming with improved protection against plasma-based projectiles compared to older models."
-	icon = 'icons/halo/obj/items/clothing/cm_suits.dmi'
-	icon_state = "1"
-	item_state = "marine_armor"
+	icon = 'icons/halo/obj/items/clothing/suits/suits_by_faction/suit_unsc.dmi'
+	icon_state = "m52b"
+	item_state = "m52b"
 	flags_atom = NO_SNOW_TYPE|NO_NAME_OVERRIDE
 	item_icons = list(
-		WEAR_JACKET = 'icons/halo/mob/humans/onmob/suit_1.dmi')
+		WEAR_JACKET = 'icons/halo/mob/humans/onmob/clothing/suits/suits_by_faction/suit_unsc.dmi')
 	valid_accessory_slots = list(ACCESSORY_SLOT_MEDAL, ACCESSORY_SLOT_DECORARMOR, ACCESSORY_SLOT_DECORGROIN, ACCESSORY_SLOT_DECORSHIN, ACCESSORY_SLOT_DECORBRACER, ACCESSORY_SLOT_DECORNECK, ACCESSORY_SLOT_PAINT, ACCESSORY_SLOT_M3UTILITY, ACCESSORY_SLOT_PONCHO)
 	restricted_accessory_slots = list(ACCESSORY_SLOT_DECORARMOR, ACCESSORY_SLOT_DECORGROIN, ACCESSORY_SLOT_DECORBRACER, ACCESSORY_SLOT_DECORNECK, ACCESSORY_SLOT_DECORSHIN, ACCESSORY_SLOT_M3UTILITY, ACCESSORY_SLOT_PAINT)
 	allowed = list(
@@ -981,4 +988,54 @@
 		/obj/item/storage/belt/gun/m39,
 		/obj/item/storage/belt/gun/xm51,
 		/obj/item/storage/belt/gun/m6,
+		/obj/item/storage/belt/gun/m7,
 	)
+
+/obj/item/clothing/suit/marine/unsc/oni
+	name = "\improper ONI M52B body armor"
+	desc = "A modified variant of the standard M52B armor, used by ONI security forces. Has no significant differences in protection compared to standard issue armor, but is painted black."
+	icon_state = "oni_sec"
+	item_state = "oni_sec"
+
+/obj/item/clothing/suit/marine/unsc/police
+	name = "\improper police RD90 ballistic armor"
+	desc = "An older model of the M52B body armor, designated as the RD90 by local police and security forces. Whilst not as comfortable, it still does the job for most of it's users, and has added protection against melee attacks."
+	icon = 'icons/halo/obj/items/clothing/suits/suits_by_faction/suit_unsc.dmi'
+	valid_accessory_slots = list(ACCESSORY_SLOT_MEDAL, ACCESSORY_SLOT_DECORGROIN, ACCESSORY_SLOT_DECORBRACER, ACCESSORY_SLOT_DECORNECK, ACCESSORY_SLOT_PAINT, ACCESSORY_SLOT_M3UTILITY, ACCESSORY_SLOT_PONCHO)
+	restricted_accessory_slots = list(ACCESSORY_SLOT_DECORGROIN, ACCESSORY_SLOT_DECORBRACER, ACCESSORY_SLOT_DECORNECK, ACCESSORY_SLOT_M3UTILITY, ACCESSORY_SLOT_PAINT)
+	icon_state = "police"
+	item_state = "police"
+	item_icons = list(
+		WEAR_JACKET = 'icons/halo/mob/humans/onmob/clothing/suits/suits_by_faction/suit_unsc.dmi')
+	armor_melee = CLOTHING_ARMOR_MEDIUMHIGH
+	armor_bullet = CLOTHING_ARMOR_MEDIUMLOW
+
+/obj/item/clothing/suit/marine/unsc/insurrection
+	icon_state = "insurgent"
+	item_state = "insurgent"
+	armor_melee = CLOTHING_ARMOR_MEDIUMLOW
+	armor_bullet = CLOTHING_ARMOR_MEDIUMLOW
+	armor_bomb = CLOTHING_ARMOR_MEDIUMLOW
+
+/obj/item/clothing/suit/marine/unsc/odst
+	name = "\improper M70DT ODST BDU"
+	desc = "The sum total of the ODST's armour complex, simply called 'Battle-Dress-Uniform'. Designed for several environments, be it in vacuum with its 30 minutes of air, in the racket of a SOEIV or the clamour of a battlefield; this BDU is ready for it all. Consists of heat-dispersing and vacuum rated body glove, and the armour worn over it, which reflects heat and bullets quite well. Do not test shock absorption for recreation."
+	icon_state = "odst"
+	item_state = "odst"
+	armor_melee = CLOTHING_ARMOR_HIGH
+	armor_bullet = CLOTHING_ARMOR_HIGH
+	armor_laser = CLOTHING_ARMOR_MEDIUMHIGH
+	armor_bomb = CLOTHING_ARMOR_MEDIUMLOW
+	armor_internaldamage = CLOTHING_ARMOR_HIGH
+
+/obj/item/clothing/suit/marine/unsc/odst/insurrection
+	name = "\improper scavenged M70DT ODST BDU"
+	icon_state = "odst_insurgent"
+	item_state = "odst_insurgent"
+	valid_accessory_slots = list(ACCESSORY_SLOT_MEDAL, ACCESSORY_SLOT_PAINT, ACCESSORY_SLOT_M3UTILITY, ACCESSORY_SLOT_PONCHO)
+	restricted_accessory_slots = list(ACCESSORY_SLOT_DECORGROIN, ACCESSORY_SLOT_DECORBRACER, ACCESSORY_SLOT_DECORNECK, ACCESSORY_SLOT_M3UTILITY, ACCESSORY_SLOT_PAINT, ACCESSORY_SLOT_DECORBRACER)
+	armor_melee = CLOTHING_ARMOR_HIGH
+	armor_bullet = CLOTHING_ARMOR_HIGH
+	armor_laser = CLOTHING_ARMOR_MEDIUM
+	armor_bomb = CLOTHING_ARMOR_MEDIUMLOW
+	armor_internaldamage = CLOTHING_ARMOR_MEDIUMHIGH

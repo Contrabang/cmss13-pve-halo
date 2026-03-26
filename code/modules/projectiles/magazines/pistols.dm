@@ -3,9 +3,9 @@
 //M4A3 PISTOL
 
 /obj/item/ammo_magazine/pistol
-	name = "\improper M4A3 magazine (9mm)"
+	name = "\improper M4A3 magazine (9x19mm)"
 	desc = "A pistol magazine."
-	caliber = "9mm"
+	caliber = "9x19mm"
 	icon = 'icons/obj/items/weapons/guns/ammo_by_faction/uscm.dmi'
 	icon_state = "m4a3"
 	max_rounds = 12
@@ -16,36 +16,49 @@
 	ammo_band_icon_empty = "+m4a3_band_e"
 
 /obj/item/ammo_magazine/pistol/hp
-	name = "\improper M4A3 hollowpoint magazine (9mm)"
+	name = "\improper M4A3 hollowpoint magazine (9x19mm)"
 	desc = "A pistol magazine. This one contains hollowpoint bullets, which have noticeably higher stopping power on unarmored targets, and noticeably less on armored targets."
 	default_ammo = /datum/ammo/bullet/pistol/hollow
 	ammo_band_color = AMMO_BAND_COLOR_HOLLOWPOINT
 
 /obj/item/ammo_magazine/pistol/ap
-	name = "\improper M4A3 AP magazine (9mm)"
+	name = "\improper M4A3 AP magazine (9x19mm)"
 	desc = "A pistol magazine. This one contains armor-piercing bullets, which have noticeably higher stopping power on well-armored targets, and noticeably less on unarmored or lightly-armored targets."
 	default_ammo = /datum/ammo/bullet/pistol/ap
 	ammo_band_color = AMMO_BAND_COLOR_AP
 
 /obj/item/ammo_magazine/pistol/rubber
-	name = "\improper M4A3 Rubber magazine (9mm)"
+	name = "\improper M4A3 Rubber magazine (9x19mm)"
 	default_ammo = /datum/ammo/bullet/pistol/rubber
 	ammo_band_color = AMMO_BAND_COLOR_RUBBER
 
 /obj/item/ammo_magazine/pistol/incendiary
-	name = "\improper M4A3 incendiary magazine (9mm)"
+	name = "\improper M4A3 incendiary magazine (9x19mm)"
 	default_ammo = /datum/ammo/bullet/pistol/incendiary
 	ammo_band_color = AMMO_BAND_COLOR_INCENDIARY
 
 /obj/item/ammo_magazine/pistol/penetrating
-	name = "\improper M4A3 wall-penetrating magazine (9mm)"
+	name = "\improper M4A3 wall-penetrating magazine (9x19mm)"
 	default_ammo = /datum/ammo/bullet/pistol/ap/penetrating
 	ammo_band_color = AMMO_BAND_COLOR_PENETRATING
 
 /obj/item/ammo_magazine/pistol/toxin
-	name = "\improper M4A3 toxin magazine (9mm)"
+	name = "\improper M4A3 toxin magazine (9x19mm)"
 	default_ammo = /datum/ammo/bullet/pistol/ap/toxin
 	ammo_band_color = AMMO_BAND_COLOR_TOXIN
+
+/obj/item/ammo_magazine/pistol/l54
+	name = "\improper L54A2 magazine (9mm)"
+	desc = "A pistol magazine."
+	caliber = "9mm"
+	icon = 'icons/obj/items/weapons/guns/ammo_by_faction/twe_ammo.dmi'
+	icon_state = "l54"
+	max_rounds = 13
+	w_class = SIZE_SMALL
+	default_ammo = /datum/ammo/bullet/pistol
+	gun_type = /obj/item/weapon/gun/pistol/l54
+	ammo_band_icon = "+m4a3_band"
+	ammo_band_icon_empty = "+m4a3_band_e"
 
 //-------------------------------------------------------
 //M4A3 45 //Inspired by the 1911
@@ -54,19 +67,26 @@
 	name = "\improper M1911 magazine (.45)"
 	default_ammo = /datum/ammo/bullet/pistol/heavy
 	caliber = ".45"
-	icon_state = "m4a345"//rename later
+	icon_state = "m1911"
 	max_rounds = 7
 	gun_type = /obj/item/weapon/gun/pistol/m1911
+	ammo_band_icon = "+m1911_band"
+	ammo_band_icon_empty = "+m1911_band_e"
 
+/obj/item/ammo_magazine/pistol/m1911/super
+	name = "\improper M1911 magazine (.45 Super)"
+	default_ammo = /datum/ammo/bullet/pistol/heavy/special
+	gun_type = /obj/item/weapon/gun/pistol/m1911/socom/officer
+	ammo_band_color = AMMO_BAND_COLOR_HIGH_IMPACT
 
 //-------------------------------------------------------
 //vp70 based off VP70
 
 
 /obj/item/ammo_magazine/pistol/vp70
-	name = "\improper VP70 Magazine (9mm)"
+	name = "\improper VP70 Magazine (9x19mm)"
 	default_ammo = /datum/ammo/bullet/pistol
-	caliber = "9mm"
+	caliber = "9x19mm"
 	icon_state = "vp70"
 	max_rounds = 19
 	gun_type = /obj/item/weapon/gun/pistol/vp70
@@ -75,37 +95,37 @@
 	ammo_band_color = null
 
 /obj/item/ammo_magazine/pistol/vp70/ap
-	name = "\improper VP70 AP magazine (9mm)"
+	name = "\improper VP70 AP magazine (9x19mm)"
 	default_ammo = /datum/ammo/bullet/pistol/ap
-	caliber = "9mm"
+	caliber = "9x19mm"
 	icon_state = "vp70"
 	max_rounds = 19
 	gun_type = /obj/item/weapon/gun/pistol/vp70
 	ammo_band_color = AMMO_BAND_COLOR_AP
 
 /obj/item/ammo_magazine/pistol/vp70/extended // Unused
-	name = "\improper vp70 extended magazine (9mm)"
+	name = "\improper vp70 extended magazine (9x19mm)"
 	icon_state = "vp70_mag_ex"
 	default_ammo = /datum/ammo/bullet/pistol
-	caliber = "9mm"
+	caliber = "9x19mm"
 
 /obj/item/ammo_magazine/pistol/vp70/toxin
-	name = "\improper vp70 toxic magazine (9mm)"
+	name = "\improper vp70 toxic magazine (9x19mm)"
 	default_ammo = /datum/ammo/bullet/pistol/ap/toxin
 	ammo_band_color = AMMO_BAND_COLOR_TOXIN
 
 /obj/item/ammo_magazine/pistol/vp70/penetrating
-	name = "\improper vp70 wall-penetrating magazine (9mm)"
+	name = "\improper vp70 wall-penetrating magazine (9x19mm)"
 	default_ammo = /datum/ammo/bullet/pistol/ap/penetrating
 	ammo_band_color = AMMO_BAND_COLOR_PENETRATING
 
 /obj/item/ammo_magazine/pistol/vp70/incendiary
-	name = "\improper vp70 incendiary magazine (9mm)"
+	name = "\improper vp70 incendiary magazine (9x19mm)"
 	default_ammo = /datum/ammo/bullet/pistol/incendiary
 	ammo_band_color = AMMO_BAND_COLOR_INCENDIARY
 
 /obj/item/ammo_magazine/pistol/vp70/rubber
-	name = "\improper vp70 rubber magazine (9mm)"
+	name = "\improper vp70 rubber magazine (9x19mm)"
 	default_ammo = /datum/ammo/bullet/pistol/rubber
 	ammo_band_color = AMMO_BAND_COLOR_RUBBER
 
@@ -113,10 +133,10 @@
 //ES-4
 
 /obj/item/ammo_magazine/pistol/es4
-	name = "\improper ES-4 stun magazine (9mm)"
-	default_ammo = /datum/ammo/bullet/pistol/rubber/stun
-	caliber = "9mm"
-	desc = "Holds 19 rounds of specialized Conductive 9mm. Electrostatic propulsion in the ES-4 functions by propelling an cV9mm round, at a proportionally slower velocity to maintain a higher kinetic energy transfer rate. All this turns a penetrative round into a less-than-lethal round."
+	name = "\improper ES-4 stun magazine (9x19mm)"
+	default_ammo = /datum/ammo/bullet/pistol/electrostatic
+	caliber = "9x19mm"
+	desc = "Holds 19 rounds of specialized Conductive 9x19mm. Electrostatic propulsion in the ES-4 functions by propelling an cV9x19mm round, at a proportionally slower velocity to maintain a higher kinetic energy transfer rate. All this turns a penetrative round into a less-than-lethal round."
 	icon = 'icons/obj/items/weapons/guns/ammo_by_faction/wy.dmi'
 	icon_state = "es4"
 	max_rounds = 19
@@ -126,27 +146,33 @@
 //VP78
 
 /obj/item/ammo_magazine/pistol/vp78
-	name = "\improper VP78 magazine (9mm)"
-	default_ammo = /datum/ammo/bullet/pistol/squash
-	caliber = "9mm"
-	icon_state = "vp78"
+	name = "\improper VP78 +P magazine (9x19mm)"
+	default_ammo = /datum/ammo/bullet/pistol/highpower
+	caliber = "9x19mm"
+	icon_state = "m4a3"
 	max_rounds = 18
 	gun_type = /obj/item/weapon/gun/pistol/vp78
-	ammo_band_icon = "+vp78_band"
-	ammo_band_icon_empty = "+vp78_band_e"
+	ammo_band_icon = "+m4a3_band"
+	ammo_band_icon_empty = "+m4a3_band_e"
+
+/obj/item/ammo_magazine/pistol/vp78/rmc
+	name = "\improper L165A1 Squash-Head magazine (9x19mm)"
+	default_ammo = /datum/ammo/bullet/pistol/squash
+	gun_type = /obj/item/weapon/gun/pistol/vp78/rmc
+	ammo_band_color = AMMO_BAND_COLOR_IMPACT
 
 /obj/item/ammo_magazine/pistol/vp78/toxin
-	name = "\improper VP78 toxic magazine (9mm)"
+	name = "\improper VP78 toxic magazine (9x19mm)"
 	default_ammo = /datum/ammo/bullet/pistol/squash/toxin
 	ammo_band_color = AMMO_BAND_COLOR_TOXIN
 
 /obj/item/ammo_magazine/pistol/vp78/penetrating
-	name = "\improper VP78 wall-penetrating magazine (9mm)"
+	name = "\improper VP78 wall-penetrating magazine (9x19mm)"
 	default_ammo = /datum/ammo/bullet/pistol/squash/penetrating
 	ammo_band_color = AMMO_BAND_COLOR_PENETRATING
 
 /obj/item/ammo_magazine/pistol/vp78/incendiary
-	name = "\improper VP78 incendiary magazine (9mm)"
+	name = "\improper VP78 incendiary magazine (9x19mm)"
 	default_ammo = /datum/ammo/bullet/pistol/squash/incendiary
 	ammo_band_color = AMMO_BAND_COLOR_INCENDIARY
 
@@ -154,8 +180,8 @@
 //Beretta 92FS, the gun McClane carries around in Die Hard. Very similar to the service pistol, all around.
 
 /obj/item/ammo_magazine/pistol/b92fs
-	name = "\improper Beretta 92FS magazine (9mm)"
-	caliber = "9mm"
+	name = "\improper Beretta 92FS magazine (9x19mm)"
+	caliber = "9x19mm"
 	icon_state = "m4a3" //PLACEHOLDER
 	max_rounds = 15
 	default_ammo = /datum/ammo/bullet/pistol
@@ -200,7 +226,7 @@
 
 /obj/item/ammo_magazine/pistol/np92
 	name = "\improper NP92 magazine (9x18mm Makarov)"
-	default_ammo = /datum/ammo/bullet/pistol
+	default_ammo = /datum/ammo/bullet/pistol/upp
 	caliber = "9x18mm Makarov"
 	icon = 'icons/obj/items/weapons/guns/ammo_by_faction/upp.dmi'
 	icon_state = "np92mag"
@@ -209,7 +235,7 @@
 
 /obj/item/ammo_magazine/pistol/np92/suppressed
 	name = "\improper NPZ92 magazine (9x18mm Makarov)"
-	default_ammo = /datum/ammo/bullet/pistol
+	default_ammo = /datum/ammo/bullet/pistol/upp
 	caliber = "9x18mm Makarov"
 	icon = 'icons/obj/items/weapons/guns/ammo_by_faction/upp.dmi'
 	icon_state = "npz92mag"
@@ -289,7 +315,7 @@
 
 /obj/item/ammo_magazine/pistol/highpower
 	name = "\improper HG-45 'Aguila' magazine (.45)"
-	default_ammo = /datum/ammo/bullet/pistol/heavy
+	default_ammo = /datum/ammo/bullet/pistol/highpower
 	caliber = ".45"
 	icon = 'icons/obj/items/weapons/guns/ammo_by_faction/colony.dmi'
 	icon_state = "highpower"
@@ -315,9 +341,9 @@ It is a modified Beretta 93R, and can fire three-round burst or single fire. Whe
 */
 
 /obj/item/ammo_magazine/pistol/auto9
-	name = "\improper Auto-9 magazine (9mm)"
+	name = "\improper Auto-9 magazine (9x19mm)"
 	default_ammo = /datum/ammo/bullet/pistol/squash
-	caliber = "9mm"
+	caliber = "9x19mm"
 	icon = 'icons/obj/items/weapons/guns/ammo_by_faction/uscm.dmi'
 	icon_state = "vp70" //PLACEHOLDER
 	max_rounds = 50

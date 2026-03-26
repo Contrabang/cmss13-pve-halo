@@ -106,6 +106,9 @@
 						SB = sandbags
 						break
 
+				if(MODE_HAS_TOGGLEABLE_FLAG(MODE_NO_MAKE_BARRICADES)) // check if barricades can be made/sandbags can be filled
+					return
+
 				if(!istype(SB, /obj/item/stack/sandbags_empty)) // Checks sandbag a second time to confirm, if none are found, cancels everything
 					to_chat(user, SPAN_NOTICE("There are no sandbags nearby to fill up."))
 					break
@@ -212,6 +215,7 @@
 	force = 30
 	throwforce = 2
 	w_class = SIZE_LARGE
+	sharp = IS_SHARP_ITEM_BIG
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
 	dirt_overlay = "etool_overlay"
@@ -249,6 +253,13 @@
 	..()
 
 /obj/item/tool/shovel/etool/folded
+	folded = TRUE
+
+/obj/item/tool/shovel/etool/rmc
+	name = "2155 pattern entrenching tool"
+	desc = "A marine commando's best friend. Dually useful for digging foxholes and bashing in noggins. Folds in half for easier storage."
+
+/obj/item/tool/shovel/etool/rmc/folded
 	folded = TRUE
 
 /obj/item/tool/shovel/etool/upp
